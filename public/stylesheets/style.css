@@ -1,0 +1,13 @@
+.sidebar-nav {
+    min-height: 400px;
+    padding-top: 20px;
+    list-style: none;
+    background-color: #eee;
+    border-right-color: #11f;
+    border-right-style: solid;
+    border-right-width: medium;
+}
+
+.error-msg {
+  color: red;
+}
