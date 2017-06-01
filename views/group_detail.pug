@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  h1 #{title}
+
+  p #[strong Musicians:]
+  //- list all musicians in the group
+    a(href=group.musician.url) #{group.musician.name}
+  p #[strong Summary:] #{group.summary}
+  
+  hr
+  p
+    a(href=group.url+'/delete') Delete Group
+  p
+    a(href=group.url+'/update') Update Group

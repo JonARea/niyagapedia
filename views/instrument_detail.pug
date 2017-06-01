@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h1 Instrument: #{instrument.name}
+
+  div(style='margin-left:20px;margin-top:20px')
+    h4 Famous #{instrument.name} players
+    dl
+    //- if (musicians)
+    //-   each musician in musicians
+    //-     dt
+    //-       a(href=musician.url) #{musician.full_name}
+      
+
+    //- else
+      p This instrument has no musicians

@@ -2,20 +2,20 @@ var mongoose = require('mongoose');
 
 var Schema = mongoose.Schema;
 
-var GenreSchema = Schema({
+var InstrumentSchema = Schema({
   name: {
     type: String,
     required: true,
     min: 3,
-    max: 100
+    max: 50
   },
 
 });
 
-GenreSchema
+InstrumentSchema
   .virtual('url')
   .get(function(){
-    return '/catalog/genre/' + this._id;
+    return '/catalog/instrument/' + this._id;
   });
 
-  module.exports = mongoose.model('Genre', GenreSchema);
+  module.exports = mongoose.model('Instrument', InstrumentSchema);

@@ -1,0 +1,42 @@
+extends layout
+
+block content
+  h1=title
+
+  form(method='POST' action='')
+    div.form-group
+      label(for='name') Name:
+      input#name.form-control(type='text', placeholder='Enter name' name='name' required='true' value=(undefined===musician ? '' : musician.name) )
+      label(for='other_names') Other Names:
+      input#other_names.form-control(type='text', placeholder='Other names or nicknames' name='other_names' required='true' value=(undefined===musician ? '' : musician.other_names))
+    //- div.form-group
+    //-   checkboxes for instruments
+    div.form-group
+      label(for='biography') Biography:
+      textarea#biography.form-control(autocomplete='on' rows='6' placeholder='Add the musician\'s biography here', name='biography' ) #{musician.biography}
+      label(for='anecdotes') Anecdotes:
+      textarea#anecdotes.form-control(rows='4' placeholder='Add humorous or interesting anecdotes here' name='anecdotes' value=(undefined===musician ? '' : musician.anecdotes) )
+    div.form-group
+      label(for='date_of_birth') Date of birth (Best Guess):
+      input#date_of_birth.form-control(type='date', placeholder='dd/mm/yyyy' name='date_of_birth', value=(undefined===musician ? '' : musician.date_of_birth_formatted) )
+      label(for='date_of_death') Date of death (Best Guess):
+      input#date_of_death.form-control(type='date', placeholder='dd/mm/yyyy' name='date_of_death', value=(undefined===musician ? '' : musician.date_of_death_formatted) )
+    div.form-group
+      label Instrument:
+      div
+        each instrument in instrument_list
+          div(style='display: inline; padding-right:10px;')
+            input.checkbox-input(type='checkbox', name='instruments', id=instrument._id, value=instrument._id, checked=instrument.checked )
+            label(for=instrument._id) #{instrument.name}
+    div.form-group
+      label Group:
+      div
+        each group in group_list
+          div(style='display: inline; padding-right:10px;')
+            input.checkbox-input(type='checkbox', name='groups', id=group._id, value=group._id, checked=group.checked )
+            label(for=group._id) #{group.name}
+    button.btn.btn-primary(type='submit') Submit
+  if errors 
+    ul
+      for error in errors
+        li!= error.msg

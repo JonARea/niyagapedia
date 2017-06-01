@@ -2,106 +2,82 @@ var express = require('express');
 var router = express.Router();
 
 //controller modules
-var author_controller = require('../controller/authorController');
-var book_controller = require('../controller/bookController');
-var book_instance_controller = require('../controller/bookInstanceController');
-var genre_controller = require('../controller/genreController');
+var musician_controller = require('../controller/musicianController');
+var group_controller = require('../controller/groupController');
 
-router.get('/', book_controller.index);
-router.get('/book/create', book_controller.book_create_get);
-router.post('/book/create', book_controller.book_create_post);
-/* GET request to delete Book. */
-router.get('/book/:id/delete', book_controller.book_delete_get);
+var instrument_controller = require('../controller/instrumentController');
 
-// POST request to delete Book
-router.post('/book/:id/delete', book_controller.book_delete_post);
+router.get('/', group_controller.index);
+router.get('/group/create', group_controller.group_create_get);
+router.post('/group/create', group_controller.group_create_post);
+/* GET request to delete Group. */
+router.get('/group/:id/delete', group_controller.group_delete_get);
 
-/* GET request to update Book. */
-router.get('/book/:id/update', book_controller.book_update_get);
-// POST request to update Book
-router.post('/book/:id/update', book_controller.book_update_post);
+// POST request to delete Group
+router.post('/group/:id/delete', group_controller.group_delete_post);
 
-/* GET request for one Book. */
-router.get('/book/:id', book_controller.book_detail);
+/* GET request to update Group. */
+router.get('/group/:id/update', group_controller.group_update_get);
+// POST request to update Group
+router.post('/group/:id/update', group_controller.group_update_post);
 
-/* GET request for list of all Book items. */
-router.get('/books', book_controller.book_list);
+/* GET request for one Group. */
+router.get('/group/:id', group_controller.group_detail);
+
+/* GET request for list of all Group items. */
+router.get('/groups', group_controller.group_list);
 /// AUTHOR ROUTES ///
 
-/* GET request for creating Author. NOTE This must come before route for id (i.e. display author) */
-router.get('/author/create', author_controller.author_create_get);
+/* GET request for creating Musician. NOTE This must come before route for id (i.e. display musician) */
+router.get('/musician/create', musician_controller.musician_create_get);
 
-/* POST request for creating Author. */
-router.post('/author/create', author_controller.author_create_post);
+/* POST request for creating Musician. */
+router.post('/musician/create', musician_controller.musician_create_post);
 
-/* GET request to delete Author. */
-router.get('/author/:id/delete', author_controller.author_delete_get);
+/* GET request to delete Musician. */
+router.get('/musician/:id/delete', musician_controller.musician_delete_get);
 
-// POST request to delete Author
-router.post('/author/:id/delete', author_controller.author_delete_post);
+// POST request to delete Musician
+router.post('/musician/:id/delete', musician_controller.musician_delete_post);
 
-/* GET request to update Author. */
-router.get('/author/:id/update', author_controller.author_update_get);
+/* GET request to update Musician. */
+router.get('/musician/:id/update', musician_controller.musician_update_get);
 
-// POST request to update Author
-router.post('/author/:id/update', author_controller.author_update_post);
+// POST request to update Musician
+router.post('/musician/:id/update', musician_controller.musician_update_post);
 
-/* GET request for one Author. */
-router.get('/author/:id', author_controller.author_detail);
+/* GET request for one Musician. */
+router.get('/musician/:id', musician_controller.musician_detail);
 
-/* GET request for list of all Authors. */
-router.get('/authors', author_controller.author_list);
+/* GET request for list of all Musicians. */
+router.get('/musicians', musician_controller.musician_list);
 
 /// GENRE ROUTES ///
 
-/* GET request for creating a Genre. NOTE This must come before route that displays Genre (uses id) */
-router.get('/genre/create', genre_controller.genre_create_get);
+/* GET request for creating a Instrument. NOTE This must come before route that displays Instrument (uses id) */
+router.get('/instrument/create', instrument_controller.instrument_create_get);
 
-/* POST request for creating Genre. */
-router.post('/genre/create', genre_controller.genre_create_post);
+/* POST request for creating Instrument. */
+router.post('/instrument/create', instrument_controller.instrument_create_post);
 
-/* GET request to delete Genre. */
-router.get('/genre/:id/delete', genre_controller.genre_delete_get);
+/* GET request to delete Instrument. */
+router.get('/instrument/:id/delete', instrument_controller.instrument_delete_get);
 
-// POST request to delete Genre
-router.post('/genre/:id/delete', genre_controller.genre_delete_post);
+// POST request to delete Instrument
+router.post('/instrument/:id/delete', instrument_controller.instrument_delete_post);
 
-/* GET request to update Genre. */
-router.get('/genre/:id/update', genre_controller.genre_update_get);
+/* GET request to update Instrument. */
+router.get('/instrument/:id/update', instrument_controller.instrument_update_get);
 
-// POST request to update Genre
-router.post('/genre/:id/update', genre_controller.genre_update_post);
+// POST request to update Instrument
+router.post('/instrument/:id/update', instrument_controller.instrument_update_post);
 
-/* GET request for one Genre. */
-router.get('/genre/:id', genre_controller.genre_detail);
+/* GET request for one Instrument. */
+router.get('/instrument/:id', instrument_controller.instrument_detail);
 
-/* GET request for list of all Genre. */
-router.get('/genres', genre_controller.genre_list);
+/* GET request for list of all Instrument. */
+router.get('/instruments', instrument_controller.instrument_list);
 
-/// BOOKINSTANCE ROUTES ///
 
-/* GET request for creating a BookInstance. NOTE This must come before route that displays BookInstance (uses id) */
-router.get('/bookinstance/create', book_instance_controller.bookinstance_create_get);
-
-/* POST request for creating BookInstance. */
-router.post('/bookinstance/create', book_instance_controller.bookinstance_create_post);
-
-/* GET request to delete BookInstance. */
-router.get('/bookinstance/:id/delete', book_instance_controller.bookinstance_delete_get);
-
-// POST request to delete BookInstance
-router.post('/bookinstance/:id/delete', book_instance_controller.bookinstance_delete_post);
-
-/* GET request to update BookInstance. */
-router.get('/bookinstance/:id/update', book_instance_controller.bookinstance_update_get);
-
-// POST request to update BookInstance
-router.post('/bookinstance/:id/update', book_instance_controller.bookinstance_update_post);
-
-/* GET request for one BookInstance. */
-router.get('/bookinstance/:id', book_instance_controller.bookinstance_detail);
-
-/* GET request for list of all BookInstance. */
-router.get('/bookinstances', book_instance_controller.bookinstance_list);
 
 module.exports = router;

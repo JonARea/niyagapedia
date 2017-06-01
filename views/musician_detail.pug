@@ -1,0 +1,34 @@
+extends layout
+
+block content
+  h1 Musician: #{musician.full_name}
+  p #{musician.date_of_birth_formatted} - #{musician.date_of_death_formatted}
+
+  div(style='margin-left:20px;margin-top:20px')
+
+    h4 Groups
+
+    dl
+    each group in musician_groups
+      dt
+      a(href=group.url) #{group.name}
+      dd #{group.summary}
+
+    else
+      p This musician has no groups.
+    
+    h4 Instruments
+    ul
+    each instrument in musician_instruments
+      li
+        a(href=instrument.url) #{instrument.name}
+    h4 Biography
+    p #{musician.biography}
+    h4 Anecdotes
+    p #{musician.anecdotes}
+
+  hr
+  p
+    a(href=musician.url+'/delete') Delete musician
+  p
+    a(href=musician.url+'/update') Update musician

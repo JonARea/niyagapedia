@@ -1,0 +1,28 @@
+extends layout
+
+block content
+  h1 #{title}: #{musician.name}
+  p= musician.lifespan
+  
+  if musician_groups.length
+  
+    p #[strong Delete the following groups before attempting to delete this musician.]
+  
+    div(style='margin-left:20px;margin-top:20px')
+
+      h4 Groups
+    
+      dl
+      each group in musician_groups
+        dt 
+          a(href=group.url) #{group.name}
+        dd #{group.summary}
+
+  else
+    p Do you really want to delete this Musician?
+    
+    form(method='POST' action='')
+      div.form-group
+        input#musicianid.form-control(type='hidden',name='musicianid', required='true', value=musician._id )
+
+      button.btn.btn-primary(type='submit') Delete

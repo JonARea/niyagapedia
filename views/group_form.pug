@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  h1= title
+
+  form(method='POST' action='')
+    div.form-group
+      label(for='name') Name:
+      input#title.form-control(type='text', placeholder='Name of group' name='name' required='true' value=(undefined===group ? '' : group.name) )
+      label(for='summary') Summary:
+      input#summary.form-control(type='text' placeholder='Information about the group' name='summary' required='true' value=(undefined===group ? '' : group.summary) )
+    div.form-group
+      label(for='musician') Musicians:
+      select#musician.form-control(type='select' placeholder='Select musicians to add' name='musician' multiple=true )
+        option(disabled=true) Select Musicians to add, Ctrl+click to deselect
+        for musician in musicians
+          option(value=musician._id) #{musician.name}
+          //- for member in group.musicians
+          //-   if member==musician
+          //-     option(value=musician._id selected=true) #{musician.name}
+          //-   else
+              
+    
+    button.btn.btn-primary(type='submit') Submit
+
+  if errors 
+    ul
+      for error in errors
+        li!= error.msg
