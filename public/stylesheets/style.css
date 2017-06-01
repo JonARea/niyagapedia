@@ -11,3 +11,6 @@
 .error-msg {
   color: red;
 }
+body {
+  font-family: 'Libre Baskerville', serif;
+}

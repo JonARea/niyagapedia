@@ -1,13 +1,14 @@
 extends layout
 
 block content
-  h1= title
+  h1= 'All musicians in the Nyogopedia'
 
   ul
   each musician in musician_list
     li
-      a(href=musician.url) #{musician.full_name}
-      | (#{musician.date_of_birth_formatted} - #{musician.date_of_death_formatted})
+      h3
+        a(href=musician.url) #{musician.full_name + ' '} 
+        | (#{musician.date_of_birth_formatted} - #{musician.date_of_death_formatted})
 
   else
     li There are no musicians.

@@ -1,12 +1,13 @@
 extends layout
 
 block content
-  h1= title
+  h1= 'All instruments in the Nyogopedia'
 
   ul
   each instrument in instrument_list
     li
-      a(href=instrument.url) #{instrument.name}
+      h3
+        a(href=instrument.url) #{instrument.name}
 
   else
     li There are no instruments

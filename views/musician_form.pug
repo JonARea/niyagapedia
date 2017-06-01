@@ -13,9 +13,9 @@ block content
     //-   checkboxes for instruments
     div.form-group
       label(for='biography') Biography:
-      textarea#biography.form-control(autocomplete='on' rows='6' placeholder='Add the musician\'s biography here', name='biography' ) #{musician.biography}
+      textarea#biography.form-control(autocomplete='on' rows='6' placeholder='Add the musician\'s biography here', name='biography' ) #{undefined===musician ? '' : musician.biography}
       label(for='anecdotes') Anecdotes:
-      textarea#anecdotes.form-control(rows='4' placeholder='Add humorous or interesting anecdotes here' name='anecdotes' value=(undefined===musician ? '' : musician.anecdotes) )
+      textarea#anecdotes.form-control(rows='4' placeholder='Add humorous or interesting anecdotes here' name='anecdotes' ) #{undefined===musician ? '' : musician.anecdotes}
     div.form-group
       label(for='date_of_birth') Date of birth (Best Guess):
       input#date_of_birth.form-control(type='date', placeholder='dd/mm/yyyy' name='date_of_birth', value=(undefined===musician ? '' : musician.date_of_birth_formatted) )
