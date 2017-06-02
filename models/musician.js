@@ -22,10 +22,14 @@ var MusicianSchema = Schema({
     type: Schema.ObjectId,
     ref: 'Instrument'
   }],
+  photos: [{
+    type: Schema.ObjectId,
+    ref: 'Image'
+  }],
   biography: { type: String },
   anecdotes: { type: String },
-  date_of_birth: {type: Date},
-  date_of_death: {type: Date},
+  date_of_birth: { type: String },
+  date_of_death: {type: String },
 });
 
 MusicianSchema
@@ -43,12 +47,12 @@ MusicianSchema
 MusicianSchema
   .virtual('date_of_birth_formatted')
   .get(function(){
-    return this.date_of_birth ? moment(this.date_of_birth).year() : '';
+    return this.date_of_birth || '';
   });
 MusicianSchema
   .virtual('date_of_death_formatted')
   .get(function(){
-    return this.date_of_death ? moment(this.date_of_death).year() : '';
+    return this.date_of_death || '';
   });
 
 module.exports = mongoose.model('Musician', MusicianSchema)

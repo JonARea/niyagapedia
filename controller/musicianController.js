@@ -1,6 +1,7 @@
 var Musician = require('../models/musician');
 var Group = require('../models/group');
-var Instrument = require('../models/instrument')
+var Instrument = require('../models/instrument');
+var Image = require('../models/image');
 var async = require('async')
 
 exports.musician_list = function(req, res, next) {
@@ -22,10 +23,20 @@ exports.musician_detail = function(req, res, next) {
         .populate('instruments')
         .exec(callback);
     },
+    photo: function(callback) {
+      Image.findOne({musician: req.params.id })
+      .exec(callback)
+    },
   }, function(err, results) {
     if (err) { return next(err); }
     //Successful, so render
-    res.render('musician_detail', { title: 'Musician Detail', musician: results.musician, musician_groups: results.musician.groups, musician_instruments: results.musician.instruments });
+    if (results.photo) {
+      res.render('musician_detail', { title: 'Musician Detail', musician: results.musician, musician_groups: results.musician.groups, musician_instruments: results.musician.instruments, photo: results.photo.url });
+    } else {
+      //no photo was found
+      res.render('musician_detail', { title: 'Musician Detail', musician: results.musician, musician_groups: results.musician.groups, musician_instruments: results.musician.instruments });
+    }
+
   });
 
 };
@@ -55,8 +66,7 @@ exports.musician_create_get = function(req, res) {
 exports.musician_create_post = function(req, res, next) {
 
     req.checkBody('name', 'Name must be specified.').notEmpty(); //We won't force Alphanumeric, because people might have spaces.
-    req.checkBody('date_of_birth', 'Invalid date').optional({ checkFalsy: true }).isDate();
-    req.checkBody('date_of_death', 'Invalid date').optional({ checkFalsy: true }).isDate();
+
 
     req.sanitize('name').escape();
     req.sanitize('other_names').escape();
@@ -66,18 +76,20 @@ exports.musician_create_post = function(req, res, next) {
     req.sanitize('other_names').trim();
     req.sanitize('anecdotes').trim();
     req.sanitize('biography').trim();
-    req.sanitize('date_of_birth').toDate();
-    req.sanitize('date_of_death').toDate();
+    req.sanitize('date_of_birth').escape();
+    req.sanitize('date_of_birth').trim();
+    req.sanitize('date_of_death').escape();
+    req.sanitize('date_of_death').trim();
 
     var errors = req.validationErrors();
-
+    console.log(req.body.instruments)
     var musician = new Musician(
       { name: req.body.name,
         other_names: req.body.other_names,
         biography: req.body.biography,
         anecdotes: req.body.anecdotes,
-        groups: (req.body.groups===undefined) ? [] : req.body.groups.split(','),
-        instruments: (req.body.instruments===undefined) ? [] : req.body.instruments.split(','),
+        groups: (req.body.groups===undefined) ? [] : req.body.groups,
+        instruments: (req.body.instruments===undefined) ? [] : req.body.instruments,
         date_of_birth: req.body.date_of_birth,
         date_of_death: req.body.date_of_death
        });

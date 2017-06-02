@@ -2,17 +2,18 @@ extends layout
 
 
 block content
-  h1= title
-  p Welcome to #[em Nyogopedia]
+  h1 Welcome to #[em Nyogopedia]
   
-  h1 Dynamic content
+  h2 Current Entries:
 
   if error
     p Error getting dynamic content.
   else
-    p The encyclopedia has the following record counts:
+    
     
     ul
       li #[strong Groups:] !{data.group_count}
       li #[strong Musicians:] !{data.musician_count}
       li #[strong Instruments:] !{data.instrument_count}
+
+  

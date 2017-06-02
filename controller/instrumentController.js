@@ -15,31 +15,22 @@ exports.instrument_list = function(req, res, next) {
 
 // Display detail page for a specific Instrument
 exports.instrument_detail = function(req, res, next) {
-    // async.waterfall([
-    //   function (callback) {
-    //     callback(null, Instrument.findById(req.params.id))
-    //   },
-    //   function (inst, callback) {
-    //
-    //       var musiciansThatPlayIt = Musician.find({$where : function() {
-    //       var plays = false;
-    //       this.instruments.forEach(function(a){
-    //         if (a===inst.name) {
-    //           plays = true;
-    //         }
-    //       });
-    //       return plays === true;
-    //     }});
-    //     console.log(musiciansThatPlayIt);
-    //   callback(inst, musiciansThatPlayIt, callback)
-    //   },
-    // ], function(err, results) {
-      // if (err) { return next(err); }
+  async.parallel({
+    musicians: function(callback){
+      Musician.find()
+      .sort([['name', 'ascending']])
+      .populate('instruments')
+      .exec(callback)
+    },
+    instrument: function(callback){
       Instrument.findById(req.params.id)
-        .exec(function (err, inst) {
-          res.render('instrument_detail', {title: 'Instrument Detail', instrument: inst })
-        })
+      .exec(callback)
+    },
+  },
+    function(err, results) {
+      res.render('instrument_detail', {title: 'Instrument Detail', instrument: results.instrument, musician_list: results.musicians })
 
+    })
 
 };
 

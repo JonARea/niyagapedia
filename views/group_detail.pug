@@ -2,11 +2,16 @@ extends layout
 
 block content
   h1 #{title}
-
-  p #[strong Musicians:]
-  //- list all musicians in the group
-    a(href=group.musician.url) #{group.musician.name}
-  p #[strong Summary:] #{group.summary}
+  
+  
+  p  #{group.summary}
+  hr
+  h4 #[strong Musicians:]
+  ul
+  each musician in group.musicians
+    li
+      a(href=musician.url) #{musician.full_name}
+  
   
   hr
   p

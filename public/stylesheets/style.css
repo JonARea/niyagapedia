@@ -1,7 +1,8 @@
 .sidebar-nav {
-    min-height: 400px;
+    min-height: 600px;
     padding-top: 20px;
-    list-style: none;
+    list-style: circle;
+    font-size: 13pt;
     background-color: #eee;
     border-right-color: #11f;
     border-right-style: solid;
@@ -11,6 +12,14 @@
 .error-msg {
   color: red;
 }
+
+.sidebar-nav {
+
+}
 body {
   font-family: 'Libre Baskerville', serif;
+}
+
+label {
+  font-family: sans-serif;
 }

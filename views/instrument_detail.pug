@@ -1,16 +1,11 @@
 extends layout
 
 block content
-  h1 Instrument: #{instrument.name}
+  h1 #{instrument.name} players in the Nyogopedia
 
   div(style='margin-left:20px;margin-top:20px')
-    h4 Famous #{instrument.name} players
-    dl
-    //- if (musicians)
-    //-   each musician in musicians
-    //-     dt
-    //-       a(href=musician.url) #{musician.full_name}
-      
-
-    //- else
-      p This instrument has no musicians
+    for musician in musician_list
+      for i in musician.instruments
+        if i.name==instrument.name
+          h3
+            a(href=musician.url) #{musician.full_name}

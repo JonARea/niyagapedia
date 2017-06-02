@@ -1,8 +1,14 @@
 extends layout
 
 block content
-  h1 Musician: #{musician.full_name}
-  p #{musician.date_of_birth_formatted} - #{musician.date_of_death_formatted}
+  div(class='row')  
+    div(class='col-sm-7')
+      h1 #{musician.full_name}
+      p #{musician.date_of_birth_formatted} - #{musician.date_of_death_formatted}
+    div(class='col-sm-2' style='margin-top:25px')
+      p
+        a(href=musician.url+'/update') Edit Musician
+  
 
   div(style='margin-left:20px;margin-top:20px')
     
@@ -29,7 +35,16 @@ block content
     p #{musician.anecdotes}
 
   hr
-  p
-    a(href=musician.url+'/delete') Delete musician
-  p
-    a(href=musician.url+'/update') Update musician
+  //- p
+  //-   //- a(href=musician.url+'/delete') Delete musician
+  
+
+block pictures
+  div(style='margin-left:8px; margin-top:20px; margin-right: 8px')
+  if photo===undefined
+    p This musician doesn't have any photos yet
+  else
+    img(src=(photo))
+    
+  hr
+  a(href='/upload') Upload photos of this musician

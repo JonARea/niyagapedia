@@ -56,11 +56,12 @@ exports.group_detail = function(req, res, next) {
 
 // Display group create form on GET
 exports.group_create_get = function(req, res, next) {
-
-
-        res.render('group_form', { title: 'Create Group' });
-
-
+  Musician.find()
+  .sort([['name', 'ascending']])
+  .exec(function(err, list_musicians){
+    if (err) { return next(err) }
+  res.render('group_form', { title: 'Create Group', musicians: list_musicians });
+  })
 };
 
 // Handle group create on POST
