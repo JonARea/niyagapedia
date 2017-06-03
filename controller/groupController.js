@@ -19,7 +19,7 @@ exports.index = function(req, res) {
             Instrument.count(callback);
         },
     }, function(err, results) {
-        res.render('catalog', { title: 'Nyogopedia Home', error: err, data: results });
+        res.render('index', { title: 'Niyagapedia Home', error: err, data: results });
     });
 };
 

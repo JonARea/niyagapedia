@@ -21,7 +21,7 @@ var Musician = require('../models/musician');
 /* GET home page. */
 
 router.get('/', function (req, res, next) {
-    res.render('index');
+    res.redirect('/catalog');
   });
 
 
