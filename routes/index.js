@@ -10,7 +10,7 @@ var upload = multer({ dest: '../public/images' });
 var Image = require('../models/image');
 var cloudinary = require('cloudinary');
 cloudinary.config({
-  cloud_name: 'nyogophoto',
+  cloud_name: 'niyagaphoto',
   api_key: '183951452293572',
   api_secret: 'GEfZkrV-M4ofsWYNF9-Fsu-_Vro'
 });
