@@ -77,7 +77,7 @@ router.post('/upload', upload.single('photoToUpload'), function (req, res, next)
     });
     image.save(function(err){
       if (err) {return err }
-      res.redirect('/');
+      res.redirect('/catalog/musician/' + req.body.musician);
     });
   });
 
