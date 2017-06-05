@@ -11,3 +11,5 @@ be able to select multiple musicians for one photo
 
 Style Login and Register pages, make logout possible
 Hide delete(already hidden)/update functions - implement user permissions (have to be very careful about deleting musicians)
+
+In the future-- make timelines of players for each instrument in the group
