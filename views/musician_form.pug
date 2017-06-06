@@ -36,6 +36,8 @@ block content
             input.checkbox-input(type='checkbox', name='groups', id=group._id, value=group._id, checked=group.checked )
             label(for=group._id) #{group.name}
     button.btn.btn-primary(type='submit') Submit
+  form(method='GET' action=musician.url)
+    button.btn.btn-warning(type='undo' style='margin-top: 10px') Go Back
   if errors 
     ul
       for error in errors

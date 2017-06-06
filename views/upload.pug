@@ -7,13 +7,6 @@ html
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js')
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
-                                           
-    //- /*script(src="node_modules/blueimp-file-upload/js/vendor/jquery.ui.widget.js", type="text/javascript")
-    //- script(src="node_modules/blueimp-file-upload/js/jquery.fileupload.js", type="text/javascript")
-    //- script(src="node_modules/blueimp-file-upload/js/jquery.iframe-transport.js", type="text/javascript")
-    //- script(src="public/javascripts/jquery.cloudinary.js" type="text/javascript")
-    //- script
-    //-   include ../public/javascripts/directUpload.js*/
     link(href="https://fonts.googleapis.com/css?family=Libre+Baskerville|Playfair+Display" rel="stylesheet") 
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
@@ -46,21 +39,8 @@ html
         div(class='col-sm-7')
           h1 Upload a new photo
           
-          //- form(class='newUploadForm')
-          //- form(class="upload_form")
-          //-   input(type="file" name="file" class="upload_field")
-          //- div(class="progress_wrapper")
-          //-   div(class="progress_bar")
-          //-   div(class="text")
-          //- div(class="thumbnails")
-
-          
           form(method='POST' action='' enctype='multipart/form-data')
-            //- div.form-group(style='height:50px')
-            //-   label(for='')
-            //-   input(name="file" type="file" class="cloudinary-fileupload" data-cloudinary-field="image_id" data-form-data='')
-
-
+            
             div.form-group
               label(for='musician') Musicians:
               select#musician.form-control(type='select' placeholder='Select musicians to add' name='musician' multiple=true )

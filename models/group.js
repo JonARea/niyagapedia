@@ -13,8 +13,10 @@ var GroupSchema = Schema({
     required: true,
   },
   musicians: [{
-    type: Schema.ObjectId,
-    ref: 'Musician'
+
+      type: Schema.ObjectId,
+      ref: 'Musician'
+    
   }]
 });
 

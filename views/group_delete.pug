@@ -2,27 +2,12 @@ extends layout
 
 block content
   h1 #{title}: #{group.name}
-  p= //show members of group
-  
-  if group_instances.length
-  
-    p #[strong Delete the following group instances before attempting to delete this group.]
-  
-    div(style='margin-left:20px;margin-top:20px')
+  //- show musicians here
 
-      h4 Group Instances
+  p Do you really want to delete this Group?
     
-      dl
-      each groupinstance in group_instances
-        dt 
-          a(href=groupinstance.url) #{groupinstance._id}
-        
-
-  else
-    p Do you really want to delete this Group?
-    
-    form(method='POST' action='')
-      div.form-group
-        input#groupid.form-control(type='hidden',name='groupid', required='true', value=group._id )
+  form(method='POST' action='')
+    div.form-group
+      input#groupid.form-control(type='hidden',name='groupid', required='true', value=group._id )
 
       button.btn.btn-primary(type='submit') Delete

@@ -1,7 +1,7 @@
 var Group = require('../models/group');
-
 var Musician = require('../models/musician');
 var Instrument = require('../models/instrument');
+
 
 
 var async = require('async');
@@ -71,18 +71,17 @@ exports.group_create_post = function(req, res, next) {
     req.checkBody('summary', 'Summary must not be empty').notEmpty();
 
     req.sanitize('name').escape();
-
+    req.sanitize('musicians').escape();
     req.sanitize('summary').escape();
 
     req.sanitize('name').trim();
-
+    req.sanitize('musicians').trim();
     req.sanitize('summary').trim();
-
 
     var group = new Group({
         name: req.body.name,
-
-        summary: req.body.summary,
+        musicians: req.body.musicians.split(','),
+        summary: req.body.summary
 
 
     });
@@ -196,7 +195,7 @@ exports.group_update_post = function(req, res, next) {
     //Sanitize id passed in.
     req.sanitize('id').escape();
     req.sanitize('id').trim();
-
+    console.log(req.body.musicians);
     //Check other data
     req.checkBody('name', 'Name must not be empty.').notEmpty();
     req.checkBody('summary', 'Summary must not be empty.').notEmpty();
@@ -208,26 +207,55 @@ exports.group_update_post = function(req, res, next) {
     req.sanitize('name').trim();
     req.sanitize('musicians').trim();
     req.sanitize('summary').trim();
+    Group.findById(req.params.id).exec(function(err, group){
+      if (err) {return err }
+      // var musicians = [];
+      // if (Array.isArray(req.body.musicians)) {
+      //   console.log('mapping')
+      //   musicians = req.body.musicians.map(function(one){
+      //     return {musician: one}
+      //   });
+      // } else {
+      //   console.log('not an array?')
+      //   musicians = {musician: req.body.musicians}
+      // }
 
-    var group = new Group(
-      { name: req.body.name,
-        summary: req.body.summary,
-        musicians: req.body.musician,
-        _id:req.params.id //This is required, or a new ID will be assigned!
-       });
 
-    var errors = req.validationErrors();
-    if (errors) {
+      var addMusicians;
+      if (group.musicians) {
+        addMusicians = group.musicians.concat(req.body.musicians);
+      } else {
+        addMusicians = req.body.musicians.split(',')
+      }
+      var group = new Group(
+        { name: req.body.name,
+          summary: req.body.summary,
+          musicians: addMusicians,
+          _id:req.params.id //This is required, or a new ID will be assigned!
+         });
 
-      res.render('group_form', { title: 'Update Group', group: group, errors: errors });
-    }
+      var errors = req.validationErrors();
+      if (errors) {
 
-    else {
-        // Data from form is valid. Update the record.
-        Group.findByIdAndUpdate(req.params.id, group, {}, function (err,thegroup) {
-            if (err) { return next(err); }
-            //successful - redirect to group detail page.
-            res.redirect(thegroup.url);
-        });
-    }
+        res.render('group_form', { title: 'Update Group', group: group, errors: errors });
+      }
+
+      else {
+          // Data from form is valid. Update the record.
+          console.log(group.musicians)
+          Group.findByIdAndUpdate(req.params.id, group, {}, function (err,thegroup) {
+              if (err) { return next(err); }
+              //successful - redirect to group detail page.
+              res.redirect(thegroup.url);
+          });
+      }
+
+    });
+
+
+
+
+
+
+
 };

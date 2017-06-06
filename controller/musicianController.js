@@ -34,6 +34,7 @@ exports.musician_detail = function(req, res, next) {
       res.render('musician_detail', { title: 'Musician Detail', musician: results.musician, musician_groups: results.musician.groups, musician_instruments: results.musician.instruments, photo: results.photo.url });
     } else {
       //no photo was found
+
       res.render('musician_detail', { title: 'Musician Detail', musician: results.musician, musician_groups: results.musician.groups, musician_instruments: results.musician.instruments });
     }
 
@@ -57,7 +58,9 @@ exports.musician_create_get = function(req, res) {
   },
   function(err, results){
     if (err) { return next(err) }
-    res.render('musician_form', {title: 'Create Musician', instrument_list: results.list_instruments, group_list: results.list_groups})
+    //handle 'goback button'
+    var musician = {url: '/'}
+    res.render('musician_form', {title: 'Create Musician', instrument_list: results.list_instruments, group_list: results.list_groups, musician: musician })
   });
 
 };
@@ -82,7 +85,7 @@ exports.musician_create_post = function(req, res, next) {
     req.sanitize('date_of_death').trim();
 
     var errors = req.validationErrors();
-    console.log(req.body.instruments)
+    console.log(req.body.instruments, req.body.groups)
     var musician = new Musician(
       { name: req.body.name,
         other_names: req.body.other_names,
