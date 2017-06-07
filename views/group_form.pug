@@ -10,19 +10,25 @@ block content
       label(for='summary') Summary:
       input#summary.form-control(type='text' placeholder='Information about the group' name='summary' required='true' value=(undefined===group ? '' : group.summary) )
     div.form-group
-      label(for='musicians') Musicians:
+      label(for='musicians') Add Musicians:
       select#musician.form-control(type='select' placeholder='Select musicians to add' name='musicians' multiple='true' )
-        option(disabled=true) Select Musicians to add, Ctrl+click to deselect
+        option(disabled=true) Select Musicians to add, Ctrl+click to select multiple or deselect
         for musician in musicians
-          option(id=musician._id value=musician._id) #{musician.full_name}
-          if group
-            for member in group.musicians
-              if member==musician._id
-                option(value=musician._id selected=true) #{musician.name}
-            
-              
+          option(id=musician._id value=musician._id) #{musician.full_name}    
     
     button.btn.btn-primary(type='submit') Submit
+    
+
+    div.form-group
+      label(for='delete_musicians') Delete Musicians:
+      select#delete_musician.form-control(type='select' placeholder='Select musicians to delete' name='delete_musicians' multiple='true' )
+        option(disabled=true) Select Musicians to delete, Ctrl+click to select multiple or deselect
+        for musician in musicians
+          option(id=musician._id value=musician._id) #{musician.full_name} 
+          
+    button.btn.btn-primary(type='submit') Submit
+  form(method='GET' action=group.url)
+    button.btn.btn-warning(type='undo' style='margin-top: 10px') Go Back
 
   if errors 
     ul

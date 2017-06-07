@@ -209,25 +209,33 @@ exports.group_update_post = function(req, res, next) {
     req.sanitize('summary').trim();
     Group.findById(req.params.id).exec(function(err, group){
       if (err) {return err }
-      // var musicians = [];
-      // if (Array.isArray(req.body.musicians)) {
-      //   console.log('mapping')
-      //   musicians = req.body.musicians.map(function(one){
-      //     return {musician: one}
-      //   });
-      // } else {
-      //   console.log('not an array?')
-      //   musicians = {musician: req.body.musicians}
-      // }
 
-
-      var addMusicians;
-      if (group.musicians) {
-        addMusicians = group.musicians.concat(req.body.musicians);
-      } else {
-        addMusicians = req.body.musicians.split(',')
+      //handle delete
+      if (req.body.delete_musicians && group.musicians) {
+        if (Array.isArray(req.body.delete_musicians)) {
+          var deleteThem = req.body.delete_musicians;
+          deleteThem.forEach(function(musician){
+            if (group.musicians.indexOf(musician) != -1) {
+              group.musicians.splice(group.musicians.indexOf(musician), 1)
+            }
+          });
+        } else if (group.musicians.indexOf(req.body.delete_musicians) != -1) {
+            group.musicians.splice(group.musicians.indexOf(req.body.delete_musicians), 1)
+        }
       }
-      var group = new Group(
+      //handle add
+      var addMusicians;
+      if (Array.isArray(group.musicians) && group.musicians.length > 0 && req.body.musicians) {
+        console.log('concatting')
+        addMusicians = group.musicians.concat(req.body.musicians.split(','));
+        console.log(addMusicians, group.musicians)
+      } else if (req.body.musicians) {
+        console.log('splitting')
+        addMusicians = req.body.musicians.split(',')
+      } else {
+        addMusicians = group.musicians
+      }
+      var updatedGroup = new Group(
         { name: req.body.name,
           summary: req.body.summary,
           musicians: addMusicians,
@@ -242,15 +250,14 @@ exports.group_update_post = function(req, res, next) {
 
       else {
           // Data from form is valid. Update the record.
-          console.log(group.musicians)
-          Group.findByIdAndUpdate(req.params.id, group, {}, function (err,thegroup) {
+
+          Group.findByIdAndUpdate(req.params.id, updatedGroup, {}, function (err,thegroup) {
               if (err) { return next(err); }
               //successful - redirect to group detail page.
               res.redirect(thegroup.url);
           });
       }
-
-    });
+  });
 
 
 
