@@ -6,7 +6,7 @@ var fs = require('fs');
 
 //handle photo upload
 var multer = require('multer');
-var upload = multer({ dest: '../public/images' });
+var upload = multer({ dest: '../test' });
 var Image = require('../models/image');
 var cloudinary = require('cloudinary');
 cloudinary.config({
