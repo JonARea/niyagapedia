@@ -6,7 +6,7 @@ var fs = require('fs');
 
 //handle photo upload
 var multer = require('multer');
-var upload = multer({ dest: '../test' });
+// var upload = multer({ dest: '../public/images' });
 var Image = require('../models/image');
 var cloudinary = require('cloudinary');
 cloudinary.config({
@@ -70,25 +70,22 @@ router.get('/upload', function(req, res, next) {
     res.render('upload', {musicians: list_musicians, user: req.user })
   });
 });
-router.post('/upload', upload.single('photoToUpload'), function (req, res, next) {
-  cloudinary.uploader.upload(req.file.path, function(result){
-    var image = new Image ({
-      musician: req.body.musician,
-      caption: req.body.caption,
-      url: result.url
-    });
-    image.save(function(err){
-      if (err) {return err }
-      res.redirect('/catalog/musician/' + req.body.musician);
-    });
-  });
+//handle photo upload- uncomment upload variable as well to enable
 
-
-  // pic.save(function(err){
-  //   if (err) { return next(err) }
-  //   res.redirect('/')
-  // });
-});
+// router.post('/upload', upload.single('photoToUpload'), function (req, res, next) {
+//   cloudinary.uploader.upload(req.file.path, function(result){
+//     var image = new Image ({
+//       musician: req.body.musician,
+//       caption: req.body.caption,
+//       url: result.url
+//     });
+//     image.save(function(err){
+//       if (err) {return err }
+//       res.redirect('/catalog/musician/' + req.body.musician);
+//     });
+//   });
+//
+//});
 
 
 router.get('/accordion', function(req, res){
