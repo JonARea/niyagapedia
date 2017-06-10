@@ -14,12 +14,8 @@ block content
       li #[strong Groups:] !{data.group_count}
       li #[strong Musicians:] !{data.musician_count}
       li #[strong Instruments:] !{data.instrument_count}
-  if (!user)
-    a(href="/login") Login
-    br
-    a(href="/register") Register
-  if (user)
-    p You are currently logged in as #{user.username}
-    a(href="/logout") Logout
-block pictures
+
   
+block pictures
+  div(style='margin-top: 20px')
+    img(src='images/sekaten.jpg' alt='sekaten' width='300px')

@@ -9,7 +9,7 @@ exports.instrument_list = function(req, res, next) {
     .sort([['name', 'ascending']])
     .exec(function(err, list_instruments){
       if (err) { return next(err) }
-      res.render('instrument_list', {title: 'Instrument List', instrument_list: list_instruments})
+      res.render('instrument_list', {title: 'Instrument List', instrument_list: list_instruments, user: req.user })
     });
 };
 
@@ -28,7 +28,7 @@ exports.instrument_detail = function(req, res, next) {
     },
   },
     function(err, results) {
-      res.render('instrument_detail', {title: 'Instrument Detail', instrument: results.instrument, musician_list: results.musicians })
+      res.render('instrument_detail', {title: 'Instrument Detail', instrument: results.instrument, musician_list: results.musicians, user: req.user })
 
     })
 
@@ -36,7 +36,7 @@ exports.instrument_detail = function(req, res, next) {
 
 // Display Instrument create form on GET
 exports.instrument_create_get = function(req, res) {
-    res.render('instrument_form', {title: 'Create Instrument'})
+    res.render('instrument_form', {title: 'New Instrument', user: req.user })
 };
 
 // Handle Instrument create on POST
@@ -59,7 +59,7 @@ exports.instrument_create_post = function(req, res, next) {
 
     if (errors) {
         //If there are errors render the form again, passing the previously entered values and errors
-        res.render('instrument_form', { title: 'Create Instrument', instrument: instrument, errors: errors});
+        res.render('instrument_form', { title: 'New Instrument', instrument: instrument, errors: errors, user: req.user });
     return;
     }
     else {
@@ -67,7 +67,7 @@ exports.instrument_create_post = function(req, res, next) {
         //Check if Instrument with same name already exists
         Instrument.findOne({ 'name': req.body.name })
             .exec( function(err, found_instrument) {
-                 console.log('found_instrument: ' + found_instrument);
+
                  if (err) { return next(err); }
 
                  if (found_instrument) {

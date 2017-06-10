@@ -19,7 +19,8 @@ exports.index = function(req, res) {
             Instrument.count(callback);
         },
     }, function(err, results) {
-        res.render('index', { title: 'Niyagapedia Home', error: err, data: results });
+
+        res.render('index', { title: 'Niyagapedia Home', error: err, data: results, user: req.user });
     });
 };
 
@@ -27,10 +28,11 @@ exports.index = function(req, res) {
 exports.group_list = function(req, res, next) {
 
   Group.find()
+    .sort([['name', 'ascending']])
     .exec(function (err, list_groups) {
       if (err) { return next(err); }
       //Successful, so render
-      res.render('group_list', { title: 'Group List', group_list: list_groups });
+      res.render('group_list', { title: 'Group List', group_list: list_groups, user: req.user });
     });
 };
 
@@ -46,7 +48,7 @@ exports.group_detail = function(req, res, next) {
   }, function(err, results) {
     if (err) { return next(err); }
     //Successful, so render
-    res.render('group_detail', { title: results.group.name, group: results.group, });
+    res.render('group_detail', { title: results.group.name, group: results.group, user: req.user });
   });
 
     //Successful, so render
@@ -60,7 +62,7 @@ exports.group_create_get = function(req, res, next) {
   .sort([['name', 'ascending']])
   .exec(function(err, list_musicians){
     if (err) { return next(err) }
-  res.render('group_form', { title: 'Create Group', musicians: list_musicians });
+  res.render('group_form', { title: 'New Group', musicians: list_musicians, user: req.user });
   })
 };
 
@@ -80,18 +82,18 @@ exports.group_create_post = function(req, res, next) {
 
     var group = new Group({
         name: req.body.name,
-        musicians: req.body.musicians.split(','),
+        musicians: (req.body.musicians===undefined ? [] : req.body.musicians.split(',')),
         summary: req.body.summary
 
 
     });
 
-    console.log('GROUP: ' + group);
+
 
     var errors = req.validationErrors();
     if (errors) {
         // Some problems so we need to re-render our group
-      res.render('group_form', { title: 'Create Group', group: group, errors: errors });
+      res.render('group_form', { title: 'New Group', group: group, errors: errors, user: req.user });
 
 
     }
@@ -101,6 +103,23 @@ exports.group_create_post = function(req, res, next) {
 
         group.save(function (err) {
             if (err) { return next(err); }
+            if (group.musicians!==undefined && Array.isArray(group.musicians)) {
+              group.musicians.forEach(function(musician){
+                Musician.findById(musician).exec(function(err, m){
+                  if(m.groups.indexOf(group._id=== -1)) {
+                    m.groups.push(group._id);
+                    m.save();
+                  }
+                })
+              })
+            } else if (group.musicians!==undefined) {
+              Musician.findById(group.musicians).exec(function(err, m){
+                if(m.groups.indexOf(group._id=== -1)) {
+                  m.groups.push(group._id);
+                  m.save();
+                }
+              })
+            }
             //successful - redirect to new group record.
             res.redirect(group.url);
         });
@@ -122,7 +141,7 @@ exports.group_delete_get = function(req, res, next) {
     }, function(err, results) {
         if (err) { return next(err); }
         //Successful, so render
-        res.render('group_delete', { title: 'Delete Group', group: results.group } );
+        res.render('group_delete', { title: 'Delete Group', group: results.group, user: req.user } );
     });
 
 };
@@ -143,20 +162,13 @@ exports.group_delete_post = function(req, res, next) {
     }, function(err, results) {
         if (err) { return next(err); }
         //Success
-        if (results.group_instances>0) {
-            //Group has instances. Render in same way as for GET route.
-            res.render('group_delete', { title: 'Delete Group', group: results.group, group_instances: results.group_instances } );
-            return;
-        }
-        else {
-            //Group has no instances. Delete object and redirect to the list of groups.
+
             Group.findByIdAndRemove(req.body.groupid, function deleteGroup(err) {
                 if (err) { return next(err); }
                 //Success - got to musician list
                 res.redirect('/catalog/groups');
             });
 
-        }
     });
 
 };
@@ -184,7 +196,7 @@ exports.group_update_get = function(req, res, next) {
         return next(err)
       }
 
-      res.render('group_form', { title: 'Update Group', group: results.group, musicians: results.musicians });
+      res.render('group_form', { title: 'Update Group', group: results.group, musicians: results.musicians, user: req.user });
 
     });
 };
@@ -195,7 +207,6 @@ exports.group_update_post = function(req, res, next) {
     //Sanitize id passed in.
     req.sanitize('id').escape();
     req.sanitize('id').trim();
-    console.log(req.body.musicians);
     //Check other data
     req.checkBody('name', 'Name must not be empty.').notEmpty();
     req.checkBody('summary', 'Summary must not be empty.').notEmpty();
@@ -226,11 +237,11 @@ exports.group_update_post = function(req, res, next) {
       //handle add
       var addMusicians;
       if (Array.isArray(group.musicians) && group.musicians.length > 0 && req.body.musicians) {
-        console.log('concatting')
+
         addMusicians = group.musicians.concat(req.body.musicians.split(','));
-        console.log(addMusicians, group.musicians)
+
       } else if (req.body.musicians) {
-        console.log('splitting')
+
         addMusicians = req.body.musicians.split(',')
       } else {
         addMusicians = group.musicians
@@ -245,7 +256,7 @@ exports.group_update_post = function(req, res, next) {
       var errors = req.validationErrors();
       if (errors) {
 
-        res.render('group_form', { title: 'Update Group', group: group, errors: errors });
+        res.render('group_form', { title: 'Update Group', group: group, errors: errors, user: req.user });
       }
 
       else {
@@ -253,6 +264,23 @@ exports.group_update_post = function(req, res, next) {
 
           Group.findByIdAndUpdate(req.params.id, updatedGroup, {}, function (err,thegroup) {
               if (err) { return next(err); }
+              if (thegroup.musicians!==undefined && Array.isArray(thegroup.musicians)) {
+                thegroup.musicians.forEach(function(musician){
+                  Musician.findById(musician).exec(function(err, m){
+                    if(m.groups.indexOf(thegroup._id=== -1)) {
+                      m.groups.push(thegroup._id);
+                      m.save();
+                    }
+                  })
+                })
+              } else if (thegroup.musicians!==undefined) {
+                Musician.findById(thegroup.musicians).exec(function(err, m){
+                  if(m.groups.indexOf(thegroup._id=== -1)) {
+                    m.groups.push(thegroup._id);
+                    m.save();
+                  }
+                })
+              }
               //successful - redirect to group detail page.
               res.redirect(thegroup.url);
           });

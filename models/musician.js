@@ -1,7 +1,7 @@
 'use strict'
 var mongoose = require('mongoose');
 var moment = require('moment');
-
+mongoose.Promise = global.Promise;
 var Schema = mongoose.Schema;
 
 var MusicianSchema = Schema({

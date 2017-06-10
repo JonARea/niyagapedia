@@ -1,12 +1,15 @@
 .sidebar-nav {
     min-height: 600px;
     padding-top: 20px;
-    list-style: circle;
+    list-style: none;
     font-size: 13pt;
-    background-color: #eee;
-    border-right-color: #11f;
+    background-color: #ddf;
+    border-right-color: #11c;
     border-right-style: solid;
-    border-right-width: medium;
+    border-right-width: thin;
+}
+a {
+  color: #167;
 }
 
 .error-msg {
@@ -15,8 +18,20 @@
 
 body {
   font-family: 'Libre Baskerville', serif;
+  background-color: #f2f2f2;
 }
 
 label {
   font-family: sans-serif;
 }
+
+#greeting {
+  list-style: none;
+  margin-bottom: 20px;
+  font-size: 12pt;
+
+}
+
+.accordion-toggle {cursor: pointer;}
+.accordion-content {display: none;}
+.accordion-content.default {display: block;}

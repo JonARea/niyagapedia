@@ -5,16 +5,30 @@ html
     meta(charset='utf-8')
     meta(name='viewport', content='width=device-width, initial-scale=1')
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+    
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js')
+  
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
-    <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville|Playfair+Display" rel="stylesheet"> 
+    link(href="https://fonts.googleapis.com/css?family=Libre+Baskerville|Playfair+Display" rel="stylesheet") 
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/accordion.css')
+    block accordionScripts
+    
   body
     div(class='container-fluid')
       div(class='row')
         div(class='col-sm-2')
           block sidebar
             ul(class='sidebar-nav')
+              li#greeting
+                if user
+                  p Logged in as 
+                    em #{user.username}
+                  a(href="/logout") Logout
+                else
+                  p Welcome, Guest.
+                  a(href="/login") Login
+                  
               li
                 a(href='/') Home
               //- li
@@ -28,11 +42,12 @@ html
               
               hr
               li
-                a(href='/catalog/musician/create') Create new musician
+                a(href='/catalog/musician/create') New musician
               li
-                a(href='/catalog/instrument/create') Create new instrument
+                a(href='/catalog/instrument/create') New instrument
               li
-                a(href='/catalog/group/create') Create new group
+                a(href='/catalog/group/create') New group
+              
             
 
         div(class='col-sm-7')

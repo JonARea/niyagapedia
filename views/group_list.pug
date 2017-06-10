@@ -2,11 +2,11 @@ extends layout
 
 block content
   h1= 'All gamelan groups in the Niyagapedia'
-
+  hr
   ul
   each group in group_list
     li
-      h3
+      h4
         a(href=group.url) #{group.name}
   else
     li There are no groups.

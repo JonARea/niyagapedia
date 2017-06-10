@@ -2,13 +2,16 @@ extends layout
 
 block content
   h1=title
-
+  if errors 
+    ul
+      for error in errors
+        li!= error.msg
   form(method='POST' action='')
     div.form-group
       label(for='name') Name:
-      input#name.form-control(type='text', placeholder='Enter name' name='name' required='true' value=(undefined===musician ? '' : musician.name) )
+      input#name.form-control(type='text', placeholder='Enter name' name='name' required='true' value=(undefined===musician ? '' : musician.name) disabled=((!user && title==='Update Musician') ? true : false ))
       label(for='other_names') Other Names:
-      input#other_names.form-control(type='text', placeholder='Other names or nicknames' name='other_names' required='true' value=(undefined===musician ? '' : musician.other_names))
+      input#other_names.form-control(type='text', placeholder='Other names or nicknames' name='other_names' value=(undefined===musician ? '' : musician.other_names) disabled=((!user && title==='Update Musician') ? true : false ))
     //- div.form-group
     //-   checkboxes for instruments
     div.form-group
@@ -38,7 +41,4 @@ block content
     button.btn.btn-primary(type='submit') Submit
   form(method='GET' action=musician.url)
     button.btn.btn-warning(type='undo' style='margin-top: 10px') Go Back
-  if errors 
-    ul
-      for error in errors
-        li!= error.msg
+  

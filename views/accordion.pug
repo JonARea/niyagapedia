@@ -1,0 +1,19 @@
+extends layout
+
+block accordionScripts
+  script
+    include ./../public/javascripts/accordion.js
+block content
+    div#accordion
+      h4(class="accordion-toggle") Accordion 1
+      div(class="accordion-content default")
+        p Cras malesuada ultrices augue molestie risus.
+  
+      h4(class="accordion-toggle") Accordion 2
+      div(class="accordion-content")
+        p Lorem ipsum dolor sit amet mauris eu turpis.
+  
+      h4(class="accordion-toggle") Accordion 3
+      div(class="accordion-content")
+        p Vivamus facilisisnibh scelerisque laoreet.
+  

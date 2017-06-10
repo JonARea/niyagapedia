@@ -1,34 +1,42 @@
 extends layout
-
+block accordionScripts
+  script
+    include ./../public/javascripts/accordion.js
 block content
   h1= title
-
+  
   form(method='POST' action='')
     div.form-group
       label(for='name') Name:
-      input#title.form-control(type='text', placeholder='Name of group' name='name' required='true' value=(undefined===group ? '' : group.name) )
-      label(for='summary') Summary:
-      input#summary.form-control(type='text' placeholder='Information about the group' name='summary' required='true' value=(undefined===group ? '' : group.summary) )
-    div.form-group
-      label(for='musicians') Add Musicians:
-      select#musician.form-control(type='select' placeholder='Select musicians to add' name='musicians' multiple='true' )
-        option(disabled=true) Select Musicians to add, Ctrl+click to select multiple or deselect
-        for musician in musicians
-          option(id=musician._id value=musician._id) #{musician.full_name}    
+      input#title.form-control(type='text', placeholder='Name of group' name='name' required='true' value=(undefined===group ? '' : group.name) disabled=((!user && title==='Update Group') ? true : false ))
+      label(for='summary' style='margin-top: 10px') Group Details: 
+      textarea#summary.form-control(placeholder='Information about the group' name='summary' required='true' rows='5') #{undefined===group ? '' : group.summary}
     
-    button.btn.btn-primary(type='submit') Submit
-    
-
-    div.form-group
-      label(for='delete_musicians') Delete Musicians:
-      select#delete_musician.form-control(type='select' placeholder='Select musicians to delete' name='delete_musicians' multiple='true' )
-        option(disabled=true) Select Musicians to delete, Ctrl+click to select multiple or deselect
-        for musician in musicians
-          option(id=musician._id value=musician._id) #{musician.full_name} 
-          
-    button.btn.btn-primary(type='submit') Submit
-  form(method='GET' action=group.url)
-    button.btn.btn-warning(type='undo' style='margin-top: 10px') Go Back
+        
+    div.form-group(id='accordion')
+      span(class='glyphicon glyphicon-triangle-right')
+      label(for='musicians' class='accordion-toggle') Add Musicians
+      div.accordion-content
+          select#musician.form-control(type='select' placeholder='Select musicians to add' name='musicians' multiple='true' )
+            option(disabled=true) Select Musicians to add, Ctrl+click to select multiple or deselect
+            for musician in musicians
+              option(id=musician._id value=musician._id) #{musician.full_name}    
+      
+          button.btn.btn-primary(type='submit' style='margin: 10px 0') Submit 
+      
+      hr
+      div.form-group(id='accordion')
+        span(class='glyphicon glyphicon-triangle-right')
+        label(for='delete_musicians' class='accordion-toggle') Remove Musicians
+        div.accordion-content
+          select#delete_musician.form-control(type='select' placeholder='Select musicians to delete' name='delete_musicians' multiple='true' )
+            option(disabled=true) Select Musicians to remove, Ctrl+click to select multiple or deselect
+            for musician in musicians
+              option(id=musician._id value=musician._id) #{musician.full_name} 
+              
+          button.btn.btn-primary(type='submit') Submit
+    form(method='GET' action=(group===undefined ? '/' : group.url))
+      button.btn.btn-warning(type='undo' style='margin-top: 10px') Go Bac k 
 
   if errors 
     ul

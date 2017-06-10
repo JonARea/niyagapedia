@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 
 var Schema = mongoose.Schema;
 
@@ -16,7 +17,7 @@ var GroupSchema = Schema({
 
       type: Schema.ObjectId,
       ref: 'Musician'
-    
+
   }]
 });
 

@@ -5,10 +5,13 @@ block content
     div(class='col-sm-7')
       h1 #{musician.full_name}
       p #{musician.date_of_birth_formatted} - #{musician.date_of_death_formatted}
-    div(class='col-sm-2' style='margin-top:25px')
+    div(class='col-sm-3' style='margin-top:25px')
       p
         a(href=musician.url+'/update') Edit Musician
-  
+        br
+      if user!==undefined
+        p(style='margin-top: 7px')  
+          a(href=musician.url+'/delete') Delete musician
 
   div(style='margin-left:20px;margin-top:20px')
     
@@ -35,8 +38,7 @@ block content
     p #{musician.anecdotes}
 
   hr
-  //- p
-  //-   //- a(href=musician.url+'/delete') Delete musician
+
   
 
 block pictures

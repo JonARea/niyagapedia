@@ -2,11 +2,11 @@ extends layout
 
 block content
   h1= 'All instruments in the Niyagapedia'
-
+  hr
   ul
   each instrument in instrument_list
     li
-      h3
+      h4
         a(href=instrument.url) #{instrument.name}
 
   else

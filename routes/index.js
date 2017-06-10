@@ -26,7 +26,7 @@ router.get('/', function (req, res, next) {
 
 
 router.get('/register', function(req, res) {
-    res.render('register', { });
+    res.render('register', {user: req.user });
 });
 
 router.post('/register', function(req, res, next) {
@@ -51,9 +51,11 @@ router.get('/login', function(req, res) {
     res.render('login', { user : req.user });
 });
 
-router.post('/login', passport.authenticate('local'), function(req, res) {
-    res.redirect('/catalog');
-});
+router.post('/login', passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/login',
+    failureFlash: true
+  }));
 
 router.get('/logout', function(req, res) {
     req.logout();
@@ -65,7 +67,7 @@ router.get('/upload', function(req, res, next) {
   .sort([['name', 'ascending']])
   .exec(function(err, list_musicians){
     if (err) {return next(err) }
-    res.render('upload', {musicians: list_musicians})
+    res.render('upload', {musicians: list_musicians, user: req.user })
   });
 });
 router.post('/upload', upload.single('photoToUpload'), function (req, res, next) {
@@ -89,8 +91,8 @@ router.post('/upload', upload.single('photoToUpload'), function (req, res, next)
 });
 
 
-router.get('/ping', function(req, res){
-    res.status(200).send("pong!");
+router.get('/accordion', function(req, res){
+    res.render('accordion');
 });
 
 
