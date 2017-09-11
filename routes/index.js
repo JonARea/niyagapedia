@@ -10,9 +10,9 @@ var upload = multer({ dest: '../test' });
 var Image = require('../models/image');
 var cloudinary = require('cloudinary');
 cloudinary.config({
-  cloud_name: 'niyagaphoto',
-  api_key: '183951452293572',
-  api_secret: 'GEfZkrV-M4ofsWYNF9-Fsu-_Vro'
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
 var musician_controller = require('../controller/musicianController');
