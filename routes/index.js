@@ -5,6 +5,7 @@ var Account = require('../models/account');
 var fs = require('fs');
 
 //handle photo upload
+var testS3 = require('../controller/testupload')
 var multer = require('multer');
 var upload = multer({ dest: '../test' });
 var Image = require('../models/image');
@@ -62,6 +63,9 @@ router.get('/logout', function(req, res) {
     res.redirect('/');
 });
 //Handle photo uploads
+router.get('/upload/test', function(req,res,next) {
+  testS3.testS3()
+})
 router.get('/upload', function(req, res, next) {
   Musician.find()
   .sort([['name', 'ascending']])
