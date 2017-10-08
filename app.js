@@ -1,3 +1,4 @@
+var configvars = require('./config')
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -20,8 +21,8 @@ var app = express();
 
 //database connection
 var mongoose = require('mongoose');
-var mongoDB = process.env.MONGODB_URI
-mongoose.connect(mongoDB);
+var mongoDB = 'mongodb://jon:admin@ds155191.mlab.com:55191/pangrawit_wiki'
+mongoose.connect(mongoDB, {useMongoClient: true});
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error'));
 
@@ -39,7 +40,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(validator());
 app.use(cookieParser());
 app.use(require('express-session')({
-    secret: process.env.EXPRESS_SECRET,
+    secret: process.env.EXPRESS_SECRET || configvars.EXPRESS_SECRET,
     resave: false,
     saveUninitialized: false
 }));

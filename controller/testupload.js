@@ -1,4 +1,4 @@
-exports.testS3 = function () {
+exports = function () {
   var AWS = require('aws-sdk')
 
 

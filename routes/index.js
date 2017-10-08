@@ -64,7 +64,7 @@ router.get('/logout', function(req, res) {
 });
 //Handle photo uploads
 router.get('/upload/test', function(req,res,next) {
-  testS3.testS3()
+  testS3()
 })
 router.get('/upload', function(req, res, next) {
   Musician.find()
