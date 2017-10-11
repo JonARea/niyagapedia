@@ -24,7 +24,8 @@
     "express-session": "^1.15.6",
     "express-validator": "^3.2.1",
     "helmet": "^3.8.2",
-    "jquery": "^3.2.1",
+    "jquery": "^3.2.1",ng, not undefined
+
     "mocha": "^3.5.3",
     "moment": "^2.18.1",
     "mongoose": "^4.12.0",

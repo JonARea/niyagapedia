@@ -1,11 +1,11 @@
 var express = require('express');
 var router = express.Router();
 
-//controller modules
-var musician_controller = require('../controller/musicianController');
-var group_controller = require('../controller/groupController');
+//controllers modules
+var musician_controller = require('../controllers/musicianController');
+var group_controller = require('../controllers/groupController');
 
-var instrument_controller = require('../controller/instrumentController');
+var instrument_controller = require('../controllers/instrumentController');
 
 router.get('/', group_controller.index);
 router.get('/group/create', group_controller.group_create_get);

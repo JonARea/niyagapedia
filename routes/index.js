@@ -5,10 +5,12 @@ var Account = require('../models/account');
 var fs = require('fs');
 
 //handle photo upload
-var testS3 = require('../controller/testupload')
+var testS3 = require('../controllers/testupload')
 var multer = require('multer');
-var upload = multer({ dest: '../test' });
+var storage = multer.memoryStorage()
+var upload = multer({ storage: storage });
 var Image = require('../models/image');
+var uploadToS3 = require('../controllers/testupload')
 var cloudinary = require('cloudinary');
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
@@ -16,7 +18,7 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-var musician_controller = require('../controller/musicianController');
+var musician_controller = require('../controllers/musicianController');
 var Musician = require('../models/musician');
 
 /* GET home page. */
@@ -64,7 +66,7 @@ router.get('/logout', function(req, res) {
 });
 //Handle photo uploads
 router.get('/upload/test', function(req,res,next) {
-  testS3()
+  testS3.test()
 })
 router.get('/upload', function(req, res, next) {
   Musician.find()
@@ -75,29 +77,23 @@ router.get('/upload', function(req, res, next) {
   });
 });
 router.post('/upload', upload.single('photoToUpload'), function (req, res, next) {
-  cloudinary.uploader.upload(req.file.path, function(result){
-    var image = new Image ({
-      musician: req.body.musician,
-      caption: req.body.caption,
-      url: result.url
-    });
-    image.save(function(err){
-      if (err) {return err }
-      res.redirect('/catalog/musician/' + req.body.musician);
-    });
-  });
-
-
-  // pic.save(function(err){
-  //   if (err) { return next(err) }
-  //   res.redirect('/')
+  // cloudinary.uploader.upload(req.file.path, function(result){
+  //   var image = new Image ({
+  //     musician: req.body.musician,
+  //     caption: req.body.caption,
+  //     url: result.url
+  //   });
+  //   image.save(function(err){
+  //     if (err) {return err }
+  //     res.redirect('/catalog/musician/' + req.body.musician);
+  //   });
   // });
+
+  console.log(req.body, req.file)
+  uploadToS3.upload(req.file.buffer, req.file.originalname, req.body.caption)
+  res.redirect('/upload')
 });
 
-
-router.get('/accordion', function(req, res){
-    res.render('accordion');
-});
 
 
 module.exports = router;

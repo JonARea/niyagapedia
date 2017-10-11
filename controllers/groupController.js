@@ -58,6 +58,7 @@ exports.group_detail = function(req, res, next) {
 
 // Display group create form on GET
 exports.group_create_get = function(req, res, next) {
+
   Musician.find()
   .sort([['name', 'ascending']])
   .exec(function(err, list_musicians){

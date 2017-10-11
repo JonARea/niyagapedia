@@ -1,3 +1,5 @@
+var env = require('node-env-file')
+env(__dirname + '/.env')
 var configvars = require('./config')
 var express = require('express');
 var path = require('path');
@@ -21,7 +23,7 @@ var app = express();
 
 //database connection
 var mongoose = require('mongoose');
-var mongoDB = 'mongodb://jon:admin@ds155191.mlab.com:55191/pangrawit_wiki'
+var mongoDB = process.env.MONGODB_URI
 mongoose.connect(mongoDB, {useMongoClient: true});
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error'));
