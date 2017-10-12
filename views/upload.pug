@@ -38,6 +38,10 @@ html
 
         div(class='col-sm-7')
           h1 Upload a new photo
+          if errors 
+            ul
+              for error in errors
+                li!= error.msg
           
           form(method='POST' action='' enctype='multipart/form-data')
             

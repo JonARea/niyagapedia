@@ -88,10 +88,33 @@ router.post('/upload', upload.single('photoToUpload'), function (req, res, next)
   //     res.redirect('/catalog/musician/' + req.body.musician);
   //   });
   // });
+  req.checkBody('musician', 'You must choose a musician').notEmpty()
+  req.sanitize('caption').escape()
+  req.sanitize('musician').escape()
+  req.sanitize('caption').trim()
+  var errors = req.validationErrors()
+  if (errors) {
+    Musician.find()
+    .sort([['name', 'ascending']])
+    .exec(function(err, list_musicians){
+      if (err) {return next(err) }
+      res.render('upload', {errors: errors, musicians: list_musicians, user: req.user})
+      return
+    })
+  } else {
+    uploadToS3.upload(req.file, req.body, function() {
+      var image = new Image ({
+          musician: req.body.musician,
+          caption: req.body.caption,
+          key: req.file.originalname
+      })
+      image.save(function(err) {
+        if (err) {return err}
+        else res.redirect('/catalog/musician/' + req.body.musician)
+      })
+    })
+  }
 
-  console.log(req.body, req.file)
-  uploadToS3.upload(req.file.buffer, req.file.originalname, req.body.caption)
-  res.redirect('/upload')
 });
 
 

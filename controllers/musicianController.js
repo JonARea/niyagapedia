@@ -2,6 +2,7 @@ var Musician = require('../models/musician');
 var Group = require('../models/group');
 var Instrument = require('../models/instrument');
 var Image = require('../models/image');
+var s3 = require('../controllers/testupload')
 var async = require('async')
 
 exports.musician_list = function(req, res, next) {
@@ -23,16 +24,18 @@ exports.musician_detail = function(req, res, next) {
         .populate('instruments')
         .exec(callback);
     },
-    photo: function(callback) {
+    photoSchema: function(callback) {
       Image.findOne({musician: req.params.id })
       .exec(callback)
     },
   }, function(err, results) {
     if (err) { return next(err); }
     //Successful, so render
-    if (results.photo) {
-      res.render('musician_detail', { title: 'Musician Detail', musician: results.musician, musician_groups: results.musician.groups, musician_instruments: results.musician.instruments, photo: results.photo.url, user: req.user });
-    } else {
+    if (results.photoSchema && results.photoSchema.key) {
+      s3.getImage(results.photoSchema.key, function(photoUrl) {
+        res.render('musician_detail', { title: 'Musician Detail', musician: results.musician, musician_groups: results.musician.groups, musician_instruments: results.musician.instruments, photo: photoUrl, user: req.user });
+      })
+      } else {
       //no photo was found
       Image.findOne({caption: 'gong'})
       .exec(function(err, gongPic) {
