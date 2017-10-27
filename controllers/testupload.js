@@ -11,7 +11,7 @@ exports.test = function () {
 
   var callback = function(err, data) {
    if (err) {
-     console.log(err, err.stack);
+     console.log(err, err.stack)
    } else {
      console.log(data)
    }
@@ -23,7 +23,7 @@ exports.test = function () {
 
 exports.upload = function(file, requestBody, callback) {
 
-  
+
   var params = {
     Body: file.buffer,
     Bucket: "niyagapedia",
@@ -32,8 +32,8 @@ exports.upload = function(file, requestBody, callback) {
 
   }
   s3.putObject(params, function(err, data) {
-    if (err) console.log(err, err.stack); // an error occurred
-    else  callback();
+    if (err) console.log(err, err.stack)  // an error occurred
+    else  callback()
   })
 }
 

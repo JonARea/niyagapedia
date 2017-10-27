@@ -28,14 +28,14 @@ block content
       label Instrument:
       div
         each instrument in instrument_list
-          div(style='display: inline; padding-right:10px;')
+          div(style='display: inline  padding-right:10px ')
             input.checkbox-input(type='checkbox', name='instruments', id=instrument._id, value=instrument._id, checked=instrument.checked )
             label(for=instrument._id) #{instrument.name}
     div.form-group
       label Group:
       div
         each group in group_list
-          div(style='display: inline; padding-right:10px;')
+          div(style='display: inline  padding-right:10px ')
             input.checkbox-input(type='checkbox', name='groups', id=group._id, value=group._id, checked=group.checked )
             label(for=group._id) #{group.name}
     button.btn.btn-primary(type='submit') Submit

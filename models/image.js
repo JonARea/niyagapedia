@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
-mongoose.Promise = global.Promise;
-var Schema = mongoose.Schema;
+var mongoose = require('mongoose') 
+mongoose.Promise = global.Promise 
+var Schema = mongoose.Schema 
 
 // var ImageSchema = new Schema({
 //     musician: Schema.ObjectId,
@@ -9,11 +9,11 @@ var Schema = mongoose.Schema;
 //       type: String
 //     }
 //
-// });
+// }) 
   var ImageSchema = new Schema({
     musician: Schema.ObjectId,
     caption: String,
     key: String
   })
 
-module.exports = mongoose.model('Image', ImageSchema);
+module.exports = mongoose.model('Image', ImageSchema) 

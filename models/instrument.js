@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
-mongoose.Promise = global.Promise;
-var Schema = mongoose.Schema;
+var mongoose = require('mongoose') 
+mongoose.Promise = global.Promise 
+var Schema = mongoose.Schema 
 
 var InstrumentSchema = Schema({
   name: {
@@ -10,12 +10,12 @@ var InstrumentSchema = Schema({
     max: 50
   },
 
-});
+}) 
 
 InstrumentSchema
   .virtual('url')
   .get(function(){
-    return '/catalog/instrument/' + this._id;
-  });
+    return '/catalog/instrument/' + this._id 
+  }) 
 
-  module.exports = mongoose.model('Instrument', InstrumentSchema);
+  module.exports = mongoose.model('Instrument', InstrumentSchema) 

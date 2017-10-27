@@ -1,44 +1,44 @@
 .sidebar-nav {
-    min-height: 600px;
-    padding-top: 20px;
-    list-style: none;
-    font-size: 13pt;
-    background-color: #ddf;
-    border-right-color: #11c;
-    border-right-style: solid;
-    border-right-width: thin;
+    min-height: 600px 
+    padding-top: 20px 
+    list-style: none 
+    font-size: 13pt 
+    background-color: #ddf 
+    border-right-color: #11c 
+    border-right-style: solid 
+    border-right-width: thin 
 }
 a {
-  color: #167;
+  color: #167 
 }
 
 .error-msg {
-  color: red;
+  color: red 
 }
 
 body {
-  font-family: 'Libre Baskerville', serif;
-  background-color: #f2f2f2;
+  font-family: 'Libre Baskerville', serif 
+  background-color: #f2f2f2 
 }
 
 label {
-  font-family: sans-serif;
+  font-family: sans-serif 
 }
 
 #greeting {
-  list-style: none;
-  margin-bottom: 20px;
-  font-size: 12pt;
+  list-style: none 
+  margin-bottom: 20px 
+  font-size: 12pt 
 
 }
 
-.accordion-toggle {cursor: pointer;}
+.accordion-toggle {cursor: pointer }
 #addMusiciansArrow {
-  cursor: pointer;
+  cursor: pointer 
 }
 #deleteMusiciansArrow {
-  cursor: pointer;
+  cursor: pointer 
 }
 .hidden {
-  height: 0!important;
+  height: 0!important 
 }
