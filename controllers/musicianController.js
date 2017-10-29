@@ -33,12 +33,15 @@ exports.musician_detail = function(req, res, next) {
     //Successful, so render
     if (results.photoSchema && results.photoSchema.key) {
       s3.getImage(results.photoSchema.key, function(photoUrl) {
+        console.log(results.musician.groups)
         res.render('musician_detail', { title: 'Musician Detail', musician: results.musician, musician_groups: results.musician.groups, musician_instruments: results.musician.instruments, photo: photoUrl, user: req.user })
       })
       } else {
       //no photo was found
       Image.findOne({caption: 'gong'})
       .exec(function(err, gongPic) {
+        if (err) throw err
+        console.log(results.musician.groups)
         res.render('musician_detail', { title: 'Musician Detail', musician: results.musician, musician_groups: results.musician.groups, musician_instruments: results.musician.instruments, photo: gongPic.url, user: req.user })
       })
 
