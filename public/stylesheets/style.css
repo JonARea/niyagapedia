@@ -1,13 +1,21 @@
+.sidebar-col {
+  min-width: 200px;
+  background-color: #DDD;
+  border-right: thin solid #167;
+  border-bottom: thin solid #167;
+  box-shadow: 1px 1px 1px grey;
+}
 .sidebar-nav {
-    min-height: 600px;
-    padding-top: 20px;
+    padding: 20px 0;
     list-style: none;
     font-size: 13pt;
-    background-color: #ddf;
-    border-right-color: #11c;
-    border-right-style: solid;
-    border-right-width: thin;
+
 }
+
+.pic-col {
+  padding-top: 20px;
+}
+
 a {
   color: #167;
 }
@@ -32,6 +40,16 @@ label {
 
 }
 
-.accordion-toggle {cursor: pointer;}
-.accordion-content {display: none;}
-.accordion-content.default {display: block;}
+.accordion-toggle {
+  cursor: pointer;
+}
+
+#addMusiciansArrow {
+  cursor: pointer;
+}
+#deleteMusiciansArrow {
+  cursor: pointer;
+}
+.hidden {
+  height: 0!important;
+}

@@ -5,30 +5,29 @@ html
     meta(charset='utf-8')
     meta(name='viewport', content='width=device-width, initial-scale=1')
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
-    
+
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js')
-  
+
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
-    link(href="https://fonts.googleapis.com/css?family=Libre+Baskerville|Playfair+Display" rel="stylesheet") 
+    link(href="https://fonts.googleapis.com/css?family=Libre+Baskerville|Playfair+Display" rel="stylesheet")
     link(rel='stylesheet', href='/stylesheets/style.css')
-    link(rel='stylesheet', href='/stylesheets/accordion.css')
     block accordionScripts
-    
+
   body
     div(class='container-fluid')
       div(class='row')
-        div(class='col-sm-2')
+        div(class='col-sm-2 sidebar-col')
           block sidebar
             ul(class='sidebar-nav')
               li#greeting
                 if user
-                  p Logged in as 
+                  p Logged in as
                     em #{user.username}
                   a(href="/logout") Logout
                 else
                   p Welcome, Guest.
                   a(href="/login") Login
-                  
+
               li
                 a(href='/') Home
               //- li
@@ -39,7 +38,7 @@ html
                 a(href='/catalog/musicians') All musicians
               li
                 a(href='/catalog/instruments') All instruments
-              
+
               hr
               li
                 a(href='/catalog/musician/create') New musician
@@ -47,10 +46,10 @@ html
                 a(href='/catalog/instrument/create') New instrument
               li
                 a(href='/catalog/group/create') New group
-              
-            
 
-        div(class='col-sm-7')
+
+
+        div(class='col-sm-4 col-md-4 col-lg-7')
           block content
-        div(class='col-sm-3')
+        div(class='col-sm-3 pic-col')
           block pictures

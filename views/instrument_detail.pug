@@ -3,7 +3,7 @@ extends layout
 block content
   h1 #{instrument.name} players in the Niyagapedia
   hr
-  div(style='margin-left:20px;margin-top:20px')
+  div(style='margin-left:20px margin-top:20px')
     for musician in musician_list
       for i in musician.instruments
         if i.name==instrument.name

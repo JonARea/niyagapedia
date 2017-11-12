@@ -1,8 +1,8 @@
 'use strict'
-var mongoose = require('mongoose');
-var moment = require('moment');
-mongoose.Promise = global.Promise;
-var Schema = mongoose.Schema;
+var mongoose = require('mongoose') 
+var moment = require('moment') 
+mongoose.Promise = global.Promise 
+var Schema = mongoose.Schema 
 
 var MusicianSchema = Schema({
   name: {
@@ -30,29 +30,29 @@ var MusicianSchema = Schema({
   anecdotes: { type: String },
   date_of_birth: { type: String },
   date_of_death: {type: String },
-});
+}) 
 
 MusicianSchema
   .virtual('full_name')
   .get(function(){
-    return this.name + ' ' + this.other_names;
-  });
+    return this.name + ' ' + this.other_names 
+  }) 
 
 MusicianSchema
   .virtual('url')
   .get(function(){
-    return '/catalog/musician/' + this._id;
-  });
+    return '/catalog/musician/' + this._id 
+  }) 
 
 MusicianSchema
   .virtual('date_of_birth_formatted')
   .get(function(){
-    return this.date_of_birth || '';
-  });
+    return this.date_of_birth || '' 
+  }) 
 MusicianSchema
   .virtual('date_of_death_formatted')
   .get(function(){
-    return this.date_of_death || '';
-  });
+    return this.date_of_death || '' 
+  }) 
 
 module.exports = mongoose.model('Musician', MusicianSchema)
