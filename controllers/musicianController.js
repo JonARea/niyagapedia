@@ -2,7 +2,7 @@ var Musician = require('../models/musician')
 var Group = require('../models/group')
 var Instrument = require('../models/instrument')
 var Image = require('../models/image')
-var s3 = require('../controllers/testupload')
+var S3 = require('../S3')
 var async = require('async')
 
 exports.musician_list = function(req, res, next) {
@@ -32,16 +32,16 @@ exports.musician_detail = function(req, res, next) {
     if (err) { return next(err)  }
     //Successful, so render
     if (results.photoSchema && results.photoSchema.key) {
-      s3.getImage(results.photoSchema.key, function(photoUrl) {
-        console.log(results.musician.groups)
+      S3.getImage(results.photoSchema.key, function(photoUrl) {
+
         res.render('musician_detail', { title: 'Musician Detail', musician: results.musician, musician_groups: results.musician.groups, musician_instruments: results.musician.instruments, photo: photoUrl, user: req.user })
       })
       } else {
-      //no photo was found
+      //no photo was found, use default image
       Image.findOne({caption: 'gong'})
       .exec(function(err, gongPic) {
         if (err) throw err
-        console.log(results.musician.groups)
+
         res.render('musician_detail', { title: 'Musician Detail', musician: results.musician, musician_groups: results.musician.groups, musician_instruments: results.musician.instruments, photo: gongPic.url, user: req.user })
       })
 
@@ -215,7 +215,7 @@ exports.musician_update_get = function(req, res, next) {
       }, function(err, results) {
         if (err) { return next(err)  }
         //Successful, so render
-        // Mark our selected instruments as checked
+        // Mark selected instruments as checked
         for (var all_g_iter = 0;  all_g_iter < results.instruments.length;  all_g_iter++) {
             for (var musician_g_iter = 0;  musician_g_iter < results.musician.instruments.length;  musician_g_iter++) {
                 if (results.instruments[all_g_iter]._id.toString()==results.musician.instruments[musician_g_iter]._id.toString()) {

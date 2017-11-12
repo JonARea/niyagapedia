@@ -31,8 +31,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error'))
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'pug')
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
+app.use(favicon(path.join(__dirname, 'public', 'gongedit.jpg')))
 app.use(compression())
 app.use(helmet())
 app.use(logger('dev'))
