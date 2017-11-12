@@ -1,9 +1,0 @@
-MONGODB_URI = 'mongodb://jon:admin@ds155191.mlab.com:55191/pangrawit_wiki'
-
-EXPRESS_SECRET = '3489uaedfaosd093raef'
-
-CLOUDINARY_NAME = 'niyagaphoto'
-
-api_key: CLOUDINARY_API_KEY = '183951452293572',
-
-api_secret: CLOUDINARY_API_SECRET = 'GEfZkrV-M4ofsWYNF9-Fsu-_Vro'
