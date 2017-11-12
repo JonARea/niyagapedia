@@ -18,6 +18,12 @@ Improving Design
 
 Photo upload capability for groups
 
+=======
+
+# Future features:
+
+Photo upload capability for groups
+
 Ability to select multiple musicians for one photo
 
 Timelines of players for each instrument in the group
