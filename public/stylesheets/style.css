@@ -33,6 +33,10 @@ label {
   font-family: sans-serif;
 }
 
+li {
+  list-style: none;
+}
+
 #greeting {
   list-style: none;
   margin-bottom: 20px;
