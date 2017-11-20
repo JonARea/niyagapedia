@@ -1,49 +1,14 @@
-doctype html
-html
-  head
-    title= title
-    meta(charset='utf-8')
-    meta(name='viewport', content='width=device-width, initial-scale=1')
-    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
-    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js')
-    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
-    link(href="https://fonts.googleapis.com/css?family=Libre+Baskerville|Playfair+Display" rel="stylesheet") 
-    link(rel='stylesheet', href='/stylesheets/style.css')
-  body
-    div(class='container-fluid')
-      div(class='row')
-        div(class='col-sm-2')
-          block sidebar
-            ul(class='sidebar-nav')
-              li
-                a(href='/') Home
-            
-              li
-                a(href='/catalog/groups') All groups
-              li
-                a(href='/catalog/musicians') All musicians
-              li
-                a(href='/catalog/instruments') All instruments
-              
-              hr
-              li
-                a(href='/catalog/musician/create') Create new musician
-              li
-                a(href='/catalog/instrument/create') Create new instrument
-              li
-                a(href='/catalog/group/create') Create new group
-              
-            
+extends layout
 
         div(class='col-sm-7')
           h1 Upload a new photo
-          if errors 
+          if errors
             ul
               for error in errors
                 li!= error.msg
-          
+
           form(method='POST' action='' enctype='multipart/form-data')
-            
+
             div.form-group
               label(for='musician') Musicians:
               select#musician.form-control(type='select' placeholder='Select musicians to add' name='musician' multiple=true )
@@ -57,7 +22,7 @@ html
               label Caption:
               input#caption.form-control(type='text' placeholder='Write a caption for the photo' name='caption')
             button.btn.btn-primary(type='submit') Submit
-        
-    
-      
-      
+
+
+
+

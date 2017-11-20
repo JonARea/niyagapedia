@@ -2,20 +2,27 @@ extends layout
 
 block content
   h1 Welcome to #[em Niyagapedia]
-  
+
+
+  if user
+    em #{user.username}
+    a(href="/logout") Logout
+  else
+    a(href="/login") Login
+
   h2 Current Entries:
 
   if error
     p Error getting dynamic content.
   else
-    
-    
+
+
     ul
       li #[strong Groups:] !{data.group_count}
       li #[strong Musicians:] !{data.musician_count}
       li #[strong Instruments:] !{data.instrument_count}
 
-  
+
 block pictures
   div(style='margin-top: 20px')
     img(src='images/sekaten.jpg' alt='sekaten' width='300px')

@@ -8,48 +8,33 @@ html
 
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js')
 
-    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+    //- script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
     link(href="https://fonts.googleapis.com/css?family=Libre+Baskerville|Playfair+Display" rel="stylesheet")
     link(rel='stylesheet', href='/stylesheets/style.css')
     block accordionScripts
 
   body
-    div(class='container-fluid')
-      div(class='row')
-        div(class='col-sm-2 sidebar-col')
-          block sidebar
-            ul(class='sidebar-nav')
-              li#greeting
-                if user
-                  p Logged in as
-                    em #{user.username}
-                  a(href="/logout") Logout
-                else
-                  p Welcome, Guest.
-                  a(href="/login") Login
+    div(class='navbar navbar-inverse navbar-fixed-top')
 
-              li
-                a(href='/') Home
-              //- li
-              //-   a(href='/catalog') Niyagapedia
-              li
-                a(href='/catalog/groups') All groups
-              li
-                a(href='/catalog/musicians') All musicians
-              li
-                a(href='/catalog/instruments') All instruments
+        .navbar-header
+          button.navbar-toggle(type='button', data-toggle='collapse', data-target='#nav-items')
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand(href='/') Niyagapedia
+        #nav-items.collapse.navbar-collapse
 
-              hr
-              li
-                a(href='/catalog/musician/create') New musician
-              li
-                a(href='/catalog/instrument/create') New instrument
-              li
-                a(href='/catalog/group/create') New group
+          ul(class='nav navbar-nav')
+            li
+              a(href='/catalog/groups') Groups
+            li
+              a(href='/catalog/musicians') Musicians
+            li
+              a(href='/catalog/instruments') Instruments
 
-
-
-        div(class='col-sm-4 col-md-4 col-lg-7')
-          block content
-        div(class='col-sm-3 pic-col')
-          block pictures
+    .container.content
+      div(class='content-col')
+        block content
+      div(class='picture-col')
+        block pictures

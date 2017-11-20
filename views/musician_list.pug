@@ -2,14 +2,18 @@ extends layout
 
 block content
   h1= 'All musicians in the Niyagapedia'
-  
+
   hr
   ul
-  each musician in musician_list
-    li
-      h4
-        a(href=musician.url) #{musician.full_name + ' '} 
-        | (#{musician.date_of_birth_formatted} - #{musician.date_of_death_formatted})
+    each musician in musician_list
+      li
+        h4
+          a(href=musician.url) #{musician.full_name + ' '}
+          | (#{musician.date_of_birth_formatted} - #{musician.date_of_death_formatted})
 
-  else
-    li There are no musicians.
+    else
+      li There are no musicians.
+
+block pictures
+  h4
+    a(href='/catalog/musician/create') Add new musician
