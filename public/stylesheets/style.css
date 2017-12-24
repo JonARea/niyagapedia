@@ -35,6 +35,10 @@ li {
   flex-wrap: wrap;
 }
 
+.login {
+  flex-direction: column;
+}
+
 #nav-items {
   align-self: flex-end;
 }
