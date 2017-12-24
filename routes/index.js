@@ -71,6 +71,7 @@ router.get('/logout', function(req, res) {
 //Test S3 connection
 router.get('/upload/test', function(req,res,next) {
   testS3.test()
+  res.sendStatus(200)
 })
 
 //Photo upload form

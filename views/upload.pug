@@ -1,27 +1,28 @@
 extends layout
 
-        div(class='col-sm-7')
-          h1 Upload a new photo
-          if errors
-            ul
-              for error in errors
-                li!= error.msg
+block content
+  div(class='col-sm-7')
+    h1 Upload a new photo
+    if errors
+      ul
+        for error in errors
+          li!= error.msg
 
-          form(method='POST' action='' enctype='multipart/form-data')
+    form(method='POST' action='' enctype='multipart/form-data')
 
-            div.form-group
-              label(for='musician') Musicians:
-              select#musician.form-control(type='select' placeholder='Select musicians to add' name='musician' multiple=true )
-                option(disabled=true) Select Musicians in the photo, Ctrl+click to deselect
-                for musician in musicians
-                  option(value=musician._id) #{musician.full_name}
-            div.form-group
-              label Select photo to upload:
-              input#photoToUpload.form-control(type='file' name='photoToUpload' )
-            div.form-group
-              label Caption:
-              input#caption.form-control(type='text' placeholder='Write a caption for the photo' name='caption')
-            button.btn.btn-primary(type='submit') Submit
+      div.form-group
+        label(for='musician') Musicians:
+        select#musician.form-control(type='select' placeholder='Select musicians to add' name='musician' multiple=true )
+          option(disabled=true) Select Musicians in the photo, Ctrl+click to deselect
+          for musician in musicians
+            option(value=musician._id) #{musician.full_name}
+      div.form-group
+        label Select photo to upload:
+        input#photoToUpload.form-control(type='file' name='photoToUpload' )
+      div.form-group
+        label Caption:
+        input#caption.form-control(type='text' placeholder='Write a caption for the photo' name='caption')
+      button.btn.btn-primary(type='submit') Submit
 
 
 

@@ -1,9 +1,9 @@
 var AWS = require('aws-sdk')
 
-var bucket = 'niyagapedia'
+var Bucket = 'niyagapedia'
 
 var s3 = new AWS.S3({
-  params: {Bucket: bucket}
+  params: {Bucket}
 })
 
 //To test connection to S3, send a GET request to /upload/test
