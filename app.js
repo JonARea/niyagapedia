@@ -1,5 +1,5 @@
-var env = require('node-env-file')
-env(__dirname + '/.env')
+// var env = require('node-env-file')
+// env(__dirname + '/.env')
 var express = require('express')
 var path = require('path')
 var favicon = require('serve-favicon')
