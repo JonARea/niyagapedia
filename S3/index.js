@@ -1,5 +1,5 @@
 var AWS = require('aws-sdk')
-var Bucket = 'niyagapedia'
+var Bucket = process.env.S3_BUCKETNAME
 var s3 = new AWS.S3({
   params: {Bucket}
 })
@@ -27,7 +27,7 @@ exports.getImage = function (key, callback) {
   s3.getObject(params, function(err, data) {
     if (err) console.log(err, err.stack)
     else {
-      var photoUrl = 'https://s3.amazonaws.com/niyagapedia/photos/' + encodeURIComponent(key)
+      var photoUrl = process.env.S3_URI + encodeURIComponent(key)
       callback(photoUrl)
     }
   })

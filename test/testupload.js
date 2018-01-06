@@ -1,6 +1,6 @@
 var AWS = require('aws-sdk')
 
-var Bucket = 'niyagapedia'
+var Bucket = process.env.S3_BUCKETNAME
 
 var s3 = new AWS.S3({
   params: {Bucket}
