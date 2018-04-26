@@ -1,12 +1,12 @@
-var should = require("should")
+var should = require('should')
 var mongoose = require('mongoose')
-var Account = require("../models/account.js")
+var Account = require('../models/account.js')
 var db
 
 describe('Account', function() {
 
     before(function(done) {
-        db = mongoose.connect('mongodb://localhost/test')
+        db = mongoose.connect('mongodb://localhost/test-niyagapedia')
             done()
     })
 
@@ -23,7 +23,6 @@ describe('Account', function() {
 
         account.save(function(error) {
             if (error) throw new Error(error)
-            else
             done()
         })
     })
@@ -32,7 +31,6 @@ describe('Account', function() {
         Account.findOne({ username: '12345' }, function(err, account) {
             if (err) throw new Error(err)
             account.username.should.eql('12345')
-
             done()
         })
     })

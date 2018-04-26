@@ -2,12 +2,9 @@ var Group = require('../models/group')
 var Musician = require('../models/musician')
 var Instrument = require('../models/instrument')
 
-
-
 var async = require('async')
 
 exports.index = function(req, res) {
-
     async.parallel({
         group_count: function(callback) {
             Group.count(callback)
@@ -26,7 +23,6 @@ exports.index = function(req, res) {
 
 // Display list of all groups
 exports.group_list = function(req, res, next) {
-
   Group.find()
     .sort([['name', 'ascending']])
     .exec(function (err, list_groups) {
@@ -42,7 +38,6 @@ exports.group_detail = function(req, res, next) {
     group: function(callback) {
       Group.findById(req.params.id)
         .populate('musicians')
-
         .exec(callback)
     },
   }, function(err, results) {
@@ -50,15 +45,10 @@ exports.group_detail = function(req, res, next) {
     //Successful, so render
     res.render('group_detail', { title: results.group.name, group: results.group, user: req.user })
   })
-
-    //Successful, so render
-
-
 }
 
 // Display group create form on GET
 exports.group_create_get = function(req, res, next) {
-
   Musician.find()
   .sort([['name', 'ascending']])
   .exec(function(err, list_musicians){
@@ -69,45 +59,34 @@ exports.group_create_get = function(req, res, next) {
 
 // Handle group create on POST
 exports.group_create_post = function(req, res, next) {
-
     req.checkBody('name', 'Name must not be empty.').notEmpty()
     req.checkBody('summary', 'Summary must not be empty').notEmpty()
-
     req.sanitize('name').escape()
     req.sanitize('musicians').escape()
     req.sanitize('summary').escape()
-
     req.sanitize('name').trim()
     req.sanitize('musicians').trim()
     req.sanitize('summary').trim()
-
     var group = new Group({
         name: req.body.name,
         musicians: (req.body.musicians===undefined ? [] : req.body.musicians.split(',')),
         summary: req.body.summary
-
-
     })
-
-
 
     var errors = req.validationErrors()
     if (errors) {
-
       res.render('group_form', { title: 'New Group', group: group, errors: errors, user: req.user })
-
-
     }
     else {
       //Not checking if group already exists so we can have multiple groups with same name
-
         group.save(function (err) {
             if (err) { return next(err)  }
             //more than one musician was added
             if (group.musicians!==undefined && Array.isArray(group.musicians)) {
               group.musicians.forEach(function(musician){
                 Musician.findById(musician).exec(function(err, m){
-                  if(m.groups.indexOf(group._id=== -1)) {
+                  if (err) throw new Error()
+                  if (m.groups.indexOf(group._id=== -1)) {
                     m.groups.push(group._id)
                     m.save()
                   }
@@ -115,7 +94,8 @@ exports.group_create_post = function(req, res, next) {
               })
             } else if (group.musicians!==undefined) {
               Musician.findById(group.musicians).exec(function(err, m){
-                if(m.groups.indexOf(group._id=== -1)) {
+                if (err) throw new Error()
+                if (m.groups.indexOf(group._id=== -1)) {
                   m.groups.push(group._id)
                   m.save()
                 }
@@ -125,7 +105,6 @@ exports.group_create_post = function(req, res, next) {
             res.redirect(group.url)
         })
     }
-
 }
 
 // Display Musician delete form on GET
@@ -260,7 +239,7 @@ exports.group_update_post = function(req, res, next) {
       }
 
       else {
-          
+
           Group.findByIdAndUpdate(req.params.id, updatedGroup, {}, function (err,thegroup) {
               if (err) { return next(err)  }
               if (thegroup.musicians!==undefined && Array.isArray(thegroup.musicians)) {

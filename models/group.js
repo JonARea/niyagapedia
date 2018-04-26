@@ -1,7 +1,7 @@
-var mongoose = require('mongoose') 
-mongoose.Promise = global.Promise 
+var mongoose = require('mongoose')
+mongoose.Promise = global.Promise
 
-var Schema = mongoose.Schema 
+var Schema = mongoose.Schema
 
 var GroupSchema = Schema({
   name: {
@@ -14,17 +14,15 @@ var GroupSchema = Schema({
     required: true,
   },
   musicians: [{
-
       type: Schema.ObjectId,
       ref: 'Musician'
-
   }]
-}) 
+})
 
 GroupSchema
   .virtual('url')
   .get(function (){
-    return '/catalog/group/' + this._id 
-  }) 
+    return '/catalog/group/' + this._id
+  })
 
-  module.exports = mongoose.model('Group', GroupSchema) 
+  module.exports = mongoose.model('Group', GroupSchema)
