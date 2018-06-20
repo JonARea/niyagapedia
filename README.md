@@ -1,6 +1,14 @@
 # niyagapedia
 An encyclopedia of Javanese gamelan musicians
 
+## Running the app
+npm install
+npm start
+
+## Running the tests
+start your local mongodb
+npm run test
+
 # Background
 The Solonese gamelan music scene has suffered the loss of many famous musicians in the past few years. I hope this simple record can help document notable musicians to keep their memories alive permanently.
 

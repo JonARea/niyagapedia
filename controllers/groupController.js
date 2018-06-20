@@ -16,7 +16,6 @@ exports.index = function(req, res) {
             Instrument.count(callback)
         },
     }, function(err, results) {
-
         res.render('index', { title: 'Niyagapedia Home', error: err, data: results, user: req.user })
     })
 }
@@ -26,7 +25,7 @@ exports.group_list = function(req, res, next) {
   Group.find()
     .sort([['name', 'ascending']])
     .exec(function (err, list_groups) {
-      if (err) { return next(err)  }
+      if (err) return next(err)
       //Successful, so render
       res.render('group_list', { title: 'Group List', group_list: list_groups, user: req.user })
     })
@@ -41,7 +40,7 @@ exports.group_detail = function(req, res, next) {
         .exec(callback)
     },
   }, function(err, results) {
-    if (err) { return next(err)  }
+    if (err) return next(err)
     //Successful, so render
     res.render('group_detail', { title: results.group.name, group: results.group, user: req.user })
   })
@@ -69,7 +68,7 @@ exports.group_create_post = function(req, res, next) {
     req.sanitize('summary').trim()
     var group = new Group({
         name: req.body.name,
-        musicians: (req.body.musicians===undefined ? [] : req.body.musicians.split(',')),
+        musicians: (req.body.musicians === undefined ? [] : req.body.musicians.split(',')),
         summary: req.body.summary
     })
 
@@ -80,22 +79,22 @@ exports.group_create_post = function(req, res, next) {
     else {
       //Not checking if group already exists so we can have multiple groups with same name
         group.save(function (err) {
-            if (err) { return next(err)  }
+            if (err) return next(err)
             //more than one musician was added
-            if (group.musicians!==undefined && Array.isArray(group.musicians)) {
+            if (group.musicians !== undefined && Array.isArray(group.musicians)) {
               group.musicians.forEach(function(musician){
                 Musician.findById(musician).exec(function(err, m){
                   if (err) throw new Error()
-                  if (m.groups.indexOf(group._id=== -1)) {
+                  if (m.groups.indexOf(group._id === -1)) {
                     m.groups.push(group._id)
                     m.save()
                   }
                 })
               })
-            } else if (group.musicians!==undefined) {
+            } else if (group.musicians !== undefined) {
               Musician.findById(group.musicians).exec(function(err, m){
                 if (err) throw new Error()
-                if (m.groups.indexOf(group._id=== -1)) {
+                if (m.groups.indexOf(group._id === -1)) {
                   m.groups.push(group._id)
                   m.save()
                 }
@@ -139,11 +138,11 @@ exports.group_delete_post = function(req, res, next) {
       },
 
     }, function(err, results) {
-        if (err) { return next(err)  }
+        if (err) return next(err)
         //Success
 
             Group.findByIdAndRemove(req.body.groupid, function deleteGroup(err) {
-                if (err) { return next(err)  }
+                if (err) return next(err)
                 //Success - got to musician list
                 res.redirect('/catalog/groups')
             })
@@ -241,11 +240,12 @@ exports.group_update_post = function(req, res, next) {
       else {
 
           Group.findByIdAndUpdate(req.params.id, updatedGroup, {}, function (err,thegroup) {
-              if (err) { return next(err)  }
+              if (err) return next(err)
               if (thegroup.musicians!==undefined && Array.isArray(thegroup.musicians)) {
                 thegroup.musicians.forEach(function(musician){
                   Musician.findById(musician).exec(function(err, m){
-                    if(m.groups.indexOf(thegroup._id=== -1)) {
+                    if (err) return next(err)
+                    if (m.groups.indexOf(thegroup._id === -1)) {
                       m.groups.push(thegroup._id)
                       m.save()
                     }
@@ -253,7 +253,8 @@ exports.group_update_post = function(req, res, next) {
                 })
               } else if (thegroup.musicians!==undefined) {
                 Musician.findById(thegroup.musicians).exec(function(err, m){
-                  if(m.groups.indexOf(thegroup._id=== -1)) {
+                  if (err) return next(err)
+                  if (m.groups.indexOf(thegroup._id === -1)) {
                     m.groups.push(thegroup._id)
                     m.save()
                   }

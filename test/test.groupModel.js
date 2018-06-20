@@ -41,6 +41,14 @@ describe('Group', function() {
         })
     })
 
+    afterEach(function(done) {
+        Group.remove({}, function() {
+            Musician.remove({}, function() {
+                done()
+            })
+        })
+    })
+
     it('finds a group by groupname', function(done) {
         Group.findOne({ name: 'Kusuma Laras' }, function(err, group) {
             if (err) throw new Error(err)
@@ -63,15 +71,21 @@ describe('Group', function() {
         Group.find()
           .sort([['name', 'ascending']])
           .exec(function (err, list_groups) {
+            if (err) throw new Error()
             list_groups.length.should.eql(2)
             list_groups[1].name.should.eql('Kusuma Laras')
           })
       })
     })
-
-    afterEach(function(done) {
-        Group.remove({}, function() {
-            done()
+    describe('group create post method', function() {
+      it('creates a new group', function() {
+        var group = new Group({
+            name: 'Ande ande Lumut',
+            musicians: [],
+            summary: 'New York Gamelan group thats moderately awesome.'
         })
+
+      //Not checking if group already exists so we can have multiple groups with same name
+      })
     })
-})
+  })
