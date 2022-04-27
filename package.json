@@ -11,7 +11,7 @@
     "test": "mocha"
   },
   "dependencies": {
-    "async": "^2.6.3",
+    "async": "^2.6.4",
     "aws-sdk": "^2.798.0",
     "blueimp-file-upload": "^9.34.0",
     "body-parser": "^1.19.0",
